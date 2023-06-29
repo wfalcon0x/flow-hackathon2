@@ -7,7 +7,7 @@ export default function Navbar() {
   const user = useCurrentUser()
 
   return (
-    <div className={navbarStyles.navbar}>
+    <div className={navbarStyles.navbar + " [background:linear-gradient(90.25deg,_#eb98fd,_#6ab7ff)]"}>
       {!user.loggedIn && 
         <button 
           onClick={fcl.authenticate} 

@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Neue+Montreal:wght@400;500&display=swap");
+@tailwind base;
+@tailwind components;
+
+@import 'additional-styles/utility-patterns.scss';
+@import 'additional-styles/range-slider.scss';
+@import 'additional-styles/toggle-switch.scss';
+@import 'additional-styles/theme.scss';
+@import 'layout';
+@tailwind utilities;
+
+/* Additional Tailwind directives: https://tailwindcss.com/docs/functions-and-directives/#responsive */
+@layer utilities {
+  .rtl {
+      direction: rtl;
+  }
+}

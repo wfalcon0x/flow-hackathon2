@@ -1,4 +1,4 @@
-import '../styles/globals.css'
+import '../styles/app.scss'
 import DefaultLayout from '../layouts/DefaultLayout'
 
 // Import FCL config
@@ -6,9 +6,9 @@ import '../config/fcl'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <DefaultLayout>
+    <>
       <Component {...pageProps} />
-    </DefaultLayout>
+    </>
   )
 }
 
