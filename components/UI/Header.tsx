@@ -28,7 +28,7 @@ export default function Header() {
 
           {/* Site branding */}
           <div className="shrink-0 mr-4">
-            <Logo />
+            <h1 className="text-white text-lg" >Sell Crypto</h1>
           </div>
 
           {/* Desktop navigation */}

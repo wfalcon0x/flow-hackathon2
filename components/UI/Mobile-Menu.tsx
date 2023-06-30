@@ -1,8 +1,10 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
-import { Transition } from '@headlessui/react'
-import Link from 'next/link'
+import { useState, useRef, useEffect } from "react";
+import { Transition } from "@headlessui/react";
+import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 export default function MobileMenu() {
   const [mobileNavOpen, setMobileNavOpen] = useState<boolean>(false)
@@ -42,11 +44,12 @@ export default function MobileMenu() {
         onClick={() => setMobileNavOpen(!mobileNavOpen)}
       >
         <span className="sr-only">Menu</span>
-        <svg className="w-6 h-6 fill-current text-gray-900" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        {/* <svg className="w-6 h-6 fill-current text-gray-900" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <rect y="4" width="24" height="2" />
           <rect y="11" width="24" height="2" />
           <rect y="18" width="24" height="2" />
-        </svg>
+        </svg> */}
+        <FontAwesomeIcon className="text-white text-lg" icon={faBars} />
       </button>
 
       {/*Mobile navigation */}

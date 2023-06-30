@@ -7,7 +7,7 @@
 @import 'additional-styles/range-slider.scss';
 @import 'additional-styles/toggle-switch.scss';
 @import 'additional-styles/theme.scss';
-@import 'layout';
+
 @tailwind utilities;
 
 /* Additional Tailwind directives: https://tailwindcss.com/docs/functions-and-directives/#responsive */
@@ -15,4 +15,14 @@
   .rtl {
       direction: rtl;
   }
+}
+
+@import 'layout';
+
+
+.gradient-text {
+    //background: -webkit-linear-gradient(90.19deg,_#eb98fd,_#6ab7ff);
+    background: linear-gradient(90.19deg,#eb98fd,#6ab7ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
