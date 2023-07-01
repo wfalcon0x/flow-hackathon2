@@ -1,0 +1,6 @@
+.ant-btn-primary:not(:disabled){
+  background-color: #010101;
+  &:hover{
+    background-color: #444444 !important;
+  }
+}

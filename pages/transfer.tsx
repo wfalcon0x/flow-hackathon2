@@ -1,6 +1,9 @@
 import { FunctionComponent } from "react";
 import MainLayout from "../layouts/MainLayout";
-import { Input, Space, Select } from 'antd';
+import { Input, Space, Select, Button } from 'antd';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock, faCircle, faSquareFull } from "@fortawesome/free-regular-svg-icons";
+import {  } from "@fortawesome/free-solid-svg-icons";
 
 const Trasfer: FunctionComponent = () => {
   return (
@@ -9,7 +12,7 @@ const Trasfer: FunctionComponent = () => {
         <div className="grid grid-cols-6 gap-4">
           <div className="col-start-1 col-span-4 flex">
           <div className="w-100 m-auto grow mb-3">
-              <label className="text-xs text-gray-900">You pay</label>
+              <label className="text-xs text-default">You pay</label>
               <Input
                 className="border-none bg-transparent hover:border-none focus:border-none"
               />
@@ -29,7 +32,7 @@ const Trasfer: FunctionComponent = () => {
         <div className="grid grid-cols-6 gap-4">
           <div className="col-start-1 col-span-4 flex">
           <div className="w-100 m-auto grow mb-3">
-              <label className="text-xs text-gray-900">You get &asymp;</label>
+              <label className="text-xs text-default">You get &asymp;</label>
               <Input
                 className="border-none bg-transparent hover:border-none focus:border-none"
               />
@@ -46,12 +49,27 @@ const Trasfer: FunctionComponent = () => {
           </div>
         </div>
       </div>
-      <div className="text-end">
+      <div className="text-end mx-3 text-sm">
+
+        <span className="fa-layers fa-fw">
+          <FontAwesomeIcon
+            className="gradient"
+            icon={faCircle}
+            mask={faSquareFull}
+            
+          />
+          <FontAwesomeIcon className="fa-gradient" icon={faClock}/>
+        </span>
+          
         <span className='gradient-text'>Quote refresh in 5 secs</span>
       </div>
       <div className="bg-gray-200 opacity-90 p-3 align mx-3 my-6 align-middle rounded-xl">
 
       </div>
+      <div className="mx-3">
+        <Button block type="primary" className="font-bold rounded-xl">SELL NOW</Button>
+      </div>
+
    </MainLayout>
   );
 };
