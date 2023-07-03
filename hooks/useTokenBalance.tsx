@@ -52,12 +52,15 @@ export interface TokenBalance {
   balance: string;
 }
 
-export default function useTokenBalance(address: string): { tokenBalance: TokenBalance[] | null } {
+export default function useTokenBalance(address: string | null): { tokenBalance: TokenBalance[] | null } {
 
   const [tokenBalance, setTokenBalance] = useState<TokenBalance[]>()
 
   useEffect(()  => {
     async function queryTokenBalance() {
+      if (address === null) {
+        return setTokenBalance([])
+      }
       const balance = await fcl.query({
         cadence: code,
         args: (arg, t) => [
