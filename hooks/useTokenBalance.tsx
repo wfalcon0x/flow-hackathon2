@@ -67,7 +67,6 @@ export default function useTokenBalance(address: string | null): { tokenBalance:
           arg(address, t.Address)
         ]
       })
-      console.log(balance)
   
       setTokenBalance(balance)
     }
