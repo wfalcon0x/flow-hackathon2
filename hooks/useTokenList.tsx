@@ -27,14 +27,14 @@ export default function useTokenList(): { tokenList: TokenListItem[] | null } {
 
     async function createTokenList() {
       switch (network) {
-        case 'local':
-          setTokenList([])
-          break;
         case 'testnet':
           setTokenList(await createTokenListForEnv(ENV.Testnet))
           break;
-        default:
+        case 'mainnet':
           setTokenList(await createTokenListForEnv(ENV.Mainnet))
+          break;
+        default:
+          setTokenList([])
           break;
       }
     }

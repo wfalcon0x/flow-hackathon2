@@ -21,10 +21,10 @@ export default function useUserTokenList(): { userTokenList: UserToken[] | null 
       return setUserTokenList([])
     }
     const result = tokenList.map(token => {
-      const balance = tokenBalance.find(balance => balance.id === token.id)?.balance;
+      const balanceItem = tokenBalance.find(balance => balance.id.startsWith(token.id))
       return {
         ...token,
-        balance: balance ? balance : '0.00'
+        balance: balanceItem ? balanceItem.balance : '0.00'
       }
     })
     setUserTokenList(result)
