@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import Navbar from '../components/Navbar'
 import Banner from '../components/UI/Banner'
 import Footer from '../components/UI/Footer'
@@ -10,7 +10,8 @@ export default function MainLayout({ children })  {
   const [size, setSize] = useState([0, 0]);
   const [classAttributes, setClassAttributes] = useState(defaultClassAttributes);
   const [innerClassAttributes, setInnerClassAttributes] = useState(innerDefaultClassAttributes);
-  
+  const mainDev = useRef();
+
   useLayoutEffect(() => {
     function updateSize() {
       setSize([window.innerWidth, window.innerHeight]);
@@ -31,7 +32,7 @@ export default function MainLayout({ children })  {
 
   return (
     <div className="relative bg-purple w-100 h-screen min-h-[1024px]">
-      <div className={classAttributes}>
+      <div id="main-app-container" className={classAttributes}>
         <div className={innerClassAttributes}>
           <Header />
           <section className="relative">

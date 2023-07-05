@@ -4,11 +4,39 @@ import { Input, Space, Select, Button, InputNumber } from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock, faCircle, faSquareFull } from "@fortawesome/free-regular-svg-icons";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import SelectModal from "../components/SelectModal";
+import useTokenList from '../hooks/useTokenList'
+
+interface ResultProps{
+  networkFee: number;
+  processingFee: number;
+  withdrawalMethod: string;
+}
 
 const Trasfer: FunctionComponent = () => {
   const refreshRate = 20;
+  const [quote, setQuote] = useState();
+  const [amount, setAmount] = useState(0);
+  const [fiatAmount, setfiatAmount] = useState(0);
   const [countDown, setCountDown] = useState(refreshRate);
   const [chevron, setChevron]  = useState(faChevronUp);
+  const [resultProps, setResultProps]  = useState<ResultProps>();
+  const { tokenList } = useTokenList();
+
+  const callAPI = async () => {
+		try {
+			const res = await fetch('/api/offramp/quote');
+			const data = await res.json();
+			setQuote(data);
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+  useEffect(() => {
+    // const result: ResultProps;
+    
+  }, [quote]);
 
   useEffect(() => {
     const timer = setTimeout(function() {
@@ -16,6 +44,7 @@ const Trasfer: FunctionComponent = () => {
         setCountDown(countDown - 1);
       }
       else{
+        callAPI();
         setCountDown(refreshRate);
       }
     }, 1000)
@@ -35,7 +64,17 @@ const Trasfer: FunctionComponent = () => {
     }
   };
 
+  const showFiatModal = function(e) {
 
+  }
+
+  const showDigitalModal = function(e) {
+
+  }
+
+  const handleValueChanged = function(e, value){
+    console.log(e.target.name);
+  }
 
   return (
    <MainLayout>
@@ -44,17 +83,14 @@ const Trasfer: FunctionComponent = () => {
           <div className="col-start-1 col-span-4 flex">
             <div className="w-100 m-auto grow mb-3">
               <label className="text-xs text-default">You pay</label>
-              <Input
+              <Input id="amount" value={amount} onChange={e => handleValueChanged(e, e.target.value)}
                 className="border-none bg-transparent hover:border-none focus:border-none"
               />
             </div>
           </div>
           <div className="col-span-2 flex">
             <div className="w-100 m-auto grow ">
-              <Select className="min-w-full bg-gray-50 opacity-100 rounded-xl align-middle"
-                bordered={false}
-                >
-              </Select>
+              <SelectModal items={tokenList}/>
             </div>
           </div>
         </div>
@@ -64,18 +100,17 @@ const Trasfer: FunctionComponent = () => {
           <div className="col-start-1 col-span-4 flex">
             <div className="w-100 m-auto grow mb-3">
               <label className="text-xs text-default">You get &asymp;</label>
-              <Input
+              <Input id="fiatAmount" value={fiatAmount} onChange={e => handleValueChanged(e, e.target.value)}
                 className="border-none bg-transparent hover:border-none focus:border-none"
               />
             </div>
           </div>
           <div className="col-span-2 flex">
             <div className="w-100 m-auto grow ">
-              <Select className="min-w-full bg-white opacity-100 rounded-xl align-middle"
-                bordered={false}
-                >
-                
-              </Select>
+              <Button onClick={e => showFiatModal(e)} className="rounded-xl min-w-full bg-gray-50 flex justify-between items-center"  style={{ background: "white"}}>
+                <span></span>
+                <FontAwesomeIcon size="xs" icon={faChevronDown}/>
+              </Button>
             </div>
           </div>
         </div>
