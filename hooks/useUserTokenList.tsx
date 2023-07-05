@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import useCurrentUser from './useCurrentUser'
-import useTokenBalance from './useTokenBalance'
+import useTokenBalance, { TokenBalance } from './useTokenBalance'
 import useTokenList from './useTokenList'
 
 export interface UserToken {
@@ -17,6 +17,9 @@ export default function useUserTokenList(): { userTokenList: UserToken[] | null 
   const { tokenList } = useTokenList()
 
   useEffect(()  => {
+    function getBalance(balanceItem: TokenBalance): string {
+      return balanceItem ? balanceItem.balance : '0.00000000'
+    }
     if (tokenList === undefined) {
       return setUserTokenList([])
     }
@@ -24,7 +27,7 @@ export default function useUserTokenList(): { userTokenList: UserToken[] | null 
       const balanceItem = tokenBalance.find(balance => balance.id.startsWith(token.id))
       return {
         ...token,
-        balance: balanceItem ? balanceItem.balance : '0.00'
+        balance: loggedIn ? getBalance(balanceItem) : ''
       }
     })
     setUserTokenList(result)
