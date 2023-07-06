@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { ChangeEvent, FunctionComponent, useEffect, useState } from "react";
 import MainLayout from "../layouts/MainLayout";
 import { Input, Space, Select, Button, InputNumber } from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,7 +17,7 @@ const Trasfer: FunctionComponent = () => {
   const refreshRate = 20;
   const [selectedCrypto, setSelectedCrypto] = useState<TokenListItem>();
   const [quote, setQuote] = useState();
-  const [amount, setAmount] = useState(0);
+  const [cryptoAmount, setCryptoAmount] = useState(0);
   const [fiatAmount, setfiatAmount] = useState(0);
   const [countDown, setCountDown] = useState(refreshRate);
   const [chevron, setChevron]  = useState(faChevronUp);
@@ -69,8 +69,16 @@ const Trasfer: FunctionComponent = () => {
 
   }
 
-  const handleValueChanged = function(e, value){
-    setfiatAmount(value);
+  const handleValueChanged = function(e: ChangeEvent<HTMLInputElement>, value){
+    const re = /^[0-9\b]+$/;
+    if (e.target.value === '' || re.test(e.target.value)) {  
+      if(e.target.id == "cryptoAmount"){
+        setCryptoAmount(value);
+      }
+      else{
+        setfiatAmount(value); 
+      }
+    }
   }
   
   const onCryptoSelected = function(e, value){
@@ -84,7 +92,7 @@ const Trasfer: FunctionComponent = () => {
           <div className="col-start-1 col-span-4 flex">
             <div className="w-100 m-auto grow mb-3">
               <label className="text-xs text-default">You pay</label>
-              <Input id="amount" value={amount} onChange={e => handleValueChanged(e, e.target.value)}
+              <Input id="cryptoAmount" value={cryptoAmount} onChange={e => handleValueChanged(e, e.target.value)}
                 className="border-none bg-transparent hover:border-none focus:border-none"
               />
             </div>
