@@ -6,14 +6,14 @@ const EXAMPLE_QUOTE = {
   fiatAmount: '5.10',
   fiatCurrency: 'GBP',
   fees: {
-    breakdown: [
+    breakdowns: [
         {
-            description: '3rd Party Fees',
+            description: 'Network Fee',
             amount: '0.50',
             currency: 'GBP'
         },
         {
-            description: 'PayGlide Fees',
+            description: 'Processing Fee',
             amount: '0.50',
             currency: 'GBP'
         }

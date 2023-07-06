@@ -20,7 +20,11 @@ type data = {
 
 export default function SelectCryptoModal({children, ...props} : PropsWithChildren<data>) {
   const [showModal, setShowModal] = useState(false);
-  const [selectedCrypto, setSelectedCrypto] = useState<TokenListItem>();
+  const [selectedCrypto, setSelectedCrypto] = useState<TokenListItem>({
+    id: "A.7e60df042a9c0868.FlowToken",
+    logo: "https://cdn.jsdelivr.net/gh/FlowFans/flow-token-list@main/token-registry/A.1654653399040a61.FlowToken/logo.svg",
+    symbol: "FLOW"
+  });
   const [displayingList, setDisplayingList] = useState<TokenListItem[]>();
   const modal = useRef<HTMLDivElement>();
   const selectModal = useRef<HTMLDivElement>();
@@ -28,7 +32,7 @@ export default function SelectCryptoModal({children, ...props} : PropsWithChildr
 
   useEffect(() => {
     setDisplayingList(props.items);
-    console.log(displayingList);
+    props.onCryptoSelected(null, selectedCrypto);
   }, [props.items]);
   
   const showModalHandler = function(e){
@@ -36,10 +40,16 @@ export default function SelectCryptoModal({children, ...props} : PropsWithChildr
       selectModal.current.append(modal.current);  
     }
     setShowModal(!showModal);
-    if(showModal){
-
-    }
   }
+
+  useEffect(() => {
+    if(showModal){
+      if (typeof document !== 'undefined') {
+        const element = document.getElementById("main-app-container");
+        element.append(modal.current);
+      }
+    }
+  }, [showModal]);
 
   const handleSearch = (e, value) => {
     if(value){
@@ -48,7 +58,6 @@ export default function SelectCryptoModal({children, ...props} : PropsWithChildr
     else{
       setDisplayingList(props.items);
     }
-    console.log(displayingList);
   };
 
   const handleCancel = () => {
@@ -62,19 +71,17 @@ export default function SelectCryptoModal({children, ...props} : PropsWithChildr
     handleCancel();
   }
 
-  useEffect(() => {
-    if(showModal){
-      if (typeof document !== 'undefined') {
-        const element = document.getElementById("main-app-container");
-        element.append(modal.current);
-      }
-    }
-  }, [showModal]);
-
   return (
     <div ref={selectModal}>
       <Button onClick={e => showModalHandler(e)} className="rounded-xl min-w-full bg-gray-50 flex justify-between items-center"  style={{ background: "white"}}>
-        <div>{selectedCrypto && <img src={selectedCrypto.logo} className="w-4 h-4" />}</div>
+        <div>
+          { selectedCrypto &&
+            <div className='flex gap-2 items-center'>
+            <div><img src={selectedCrypto.logo} className="w-4 h-4" /></div>
+            <div className='uppercase'>{selectedCrypto.symbol}</div>
+            </div>
+          }
+        </div>
         <FontAwesomeIcon size="xs" icon={faChevronDown}/>
       </Button>
       {showModal &&
@@ -102,7 +109,6 @@ export default function SelectCryptoModal({children, ...props} : PropsWithChildr
             </li>
           )}
           </ul>
-          
         </div>
       }
     </div>

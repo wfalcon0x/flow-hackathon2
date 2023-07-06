@@ -5,30 +5,31 @@ import elementStyles from '../styles/Elements.module.css'
 import { Button, Input, Modal } from 'antd'
 import React, { PropsWithChildren, useEffect, useReducer, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronDown, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import { TokenListItem } from '../hooks/useTokenList'
+import { faChevronDown, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { CurrencyListItem } from '../hooks/useCurrencyList'
 
 export interface OnFiatSelected{(
   e: React.MouseEventHandler<HTMLDivElement>,
-  crypto: TokenListItem) : void
+  crypto: CurrencyListItem) : void
 }
 
 type data = {
-  items: TokenListItem[]
-  onCryptoSelected?: OnFiatSelected
+  items: CurrencyListItem[]
+  onFiatSelected?: OnFiatSelected
 }
 
 export default function SelectFiatModal({children, ...props} : PropsWithChildren<data>) {
   const [showModal, setShowModal] = useState(false);
-  const [selectedCrypto, setSelectedCrypto] = useState<TokenListItem>();
-  const [displayingList, setDisplayingList] = useState<TokenListItem[]>();
+  const [selectedFiat, setSelectedFiat] = useState<CurrencyListItem>({
+    id: 'gbp',
+    logo: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAgCAMAAABjCgsuAAAAyVBMVEUAIH8BIH8CIYAHJoIOLIYPLYYZNYsaNowfO44nQpI3UJo4UJtLYaRhdK9idbBmebJnerJoerN4iLt5ibuQncenstK7w9y8xN29xd3P1ebRDSTe4u7fMh3fNiHgOyfgPCjhQi/hRDHjTjzlW0rlW0vnalvna1vpdWfpdmjpe27qfG/qjYTqj4bqoJnq7PTropvrs7DrtLHrurfrurjr7fTsxcTsxcXu1NXx4ePy8/j06+309fn17e/49PX49Pb7+vv7+/z+/v7///8ZBiYZAAABQklEQVQ4y82U2U4CURBEW3ABRR2VdShkQFTcFUQYQIH6/4/ywbm5KwYeTKzHSarOTU9XC4D+nGkkhsg4jmNSfzmoc/XSAi5fpQ8gGZLVwi+G0jOnNwCuJhQOEg/iGPJl8qMD4GHBhqSc37oQ21BscPEIoDMiy3kp1KghpwHD8YyTHoDrKd9LIiJy5kEMw26FfGsDracV6/vZCzyINhw2+XUPoDvm8iKnx+JAlCF3vuS4C+Duk80jc/BSqBqQSBlqavhkZU8cRQoyIJXhZ/i9CWcn4suEZIaRGn5RQtqJUs77ABJl0MO39iak7EkBbW+It9R/NPz9lJztsH5cEiq8tRpDezX8LobizeULFd6P1+sdpesgZrxRIKcma+LtTocgTrxzNTxIiGrfJSfQi/cvn5W5yam0IOLFB6+3hshm514X/hucN8Af5X8PRgAAAABJRU5ErkJggg=='
+  });
+  const [displayingList, setDisplayingList] = useState<CurrencyListItem[]>();
   const modal = useRef<HTMLDivElement>();
   const selectModal = useRef<HTMLDivElement>();
   
-
   useEffect(() => {
     setDisplayingList(props.items);
-    console.log(displayingList);
   }, [props.items]);
   
   const showModalHandler = function(e){
@@ -43,12 +44,11 @@ export default function SelectFiatModal({children, ...props} : PropsWithChildren
 
   const handleSearch = (e, value) => {
     if(value){
-      setDisplayingList(props.items.filter(i => i.id.includes(value)));
+      setDisplayingList(props.items.filter(i => i.id.toLowerCase().includes(value.toLowerCase())));
     }
     else{
       setDisplayingList(props.items);
     }
-    console.log(displayingList);
   };
 
   const handleCancel = () => {
@@ -57,8 +57,8 @@ export default function SelectFiatModal({children, ...props} : PropsWithChildren
   };
 
   const handleSelect = (e, item) => {
-    setSelectedCrypto(item);
-    props.onCryptoSelected(e, item);
+    setSelectedFiat(item);
+    props.onFiatSelected(e, item);
     handleCancel();
   }
 
@@ -74,13 +74,26 @@ export default function SelectFiatModal({children, ...props} : PropsWithChildren
   return (
     <div ref={selectModal}>
       <Button onClick={e => showModalHandler(e)} className="rounded-xl min-w-full bg-gray-50 flex justify-between items-center"  style={{ background: "white"}}>
-        <div>{selectedCrypto && <img src={selectedCrypto.logo} className="w-4 h-4" />}</div>
+        <div>
+          { selectedFiat &&
+            <div className='flex gap-2 items-center'>
+            <div>
+              <img src={selectedFiat.logo} className="w-4 h-4 rounded-full" />
+            </div>
+            <div className='uppercase'>{selectedFiat.id.toUpperCase()}</div>
+            </div>
+          }
+        </div>
         <FontAwesomeIcon size="xs" icon={faChevronDown}/>
       </Button>
       {showModal &&
         <div key="modal" className={`absolute overflow-auto bg-white top-0 left-0 w-full h-full z-50 p-3 mb-7`}
           ref={modal}
         >
+          <div className='mb-3'>
+            <div className='text-center text-bold'>Select a Fiat Currency</div>
+          </div>
+          <Button type="ghost" className='absolute top-1 right-3' onClick={handleCancel}><FontAwesomeIcon size='2x' icon={faXmark}/></Button>
           <Input
             className='mb-1'
             onChange={(e)=> handleSearch(e, e.target.value)}
@@ -91,14 +104,15 @@ export default function SelectFiatModal({children, ...props} : PropsWithChildren
           <ul>
           {displayingList && displayingList.map((item) => 
             <li onClick={(e) => handleSelect(e, item)} key={item.id} className='w-full bg-gray-200 hover:bg-gray-400 px-3 py-2 my-2 rounded-xl text-sm text-default'>
-              <div className='flex justify-between items-center'>
-                <div><img src={item.logo} className="w-6 h-6" /></div><div className='w-full hover:bg-gray-400 p-2 rounded-xl text-right'>{'0.00000000'}</div>
+              <div className='flex items-center gap-2'>
+                <div>
+                  <img src={item.logo} className="w-6 h-6 rounded-full" />
+                </div>
+                <div>{item.id.toUpperCase()}</div>
               </div>
-              <div className='text-xs text-default'>{item.id}</div>
             </li>
           )}
           </ul>
-          <Button type="primary" className='absolute bottom-3 right-3' onClick={handleCancel}>Cancel</Button>
         </div>
       }
     </div>
