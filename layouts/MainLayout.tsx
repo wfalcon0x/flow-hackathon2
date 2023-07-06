@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Navbar from '../components/Navbar'
 import Banner from '../components/UI/Banner'
 import Footer from '../components/UI/Footer'
@@ -12,7 +12,9 @@ export default function MainLayout({ children })  {
   const [innerClassAttributes, setInnerClassAttributes] = useState(innerDefaultClassAttributes);
   const mainDev = useRef();
 
-  useLayoutEffect(() => {
+
+
+  useEffect(() => {
     function updateSize() {
       setSize([window.innerWidth, window.innerHeight]);
       if(window.innerWidth < 500){

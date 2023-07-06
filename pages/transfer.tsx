@@ -4,10 +4,10 @@ import { Input, Space, Select, Button, InputNumber } from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock, faCircle, faSquareFull } from "@fortawesome/free-regular-svg-icons";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import SelectModal from "../components/SelectModal";
-import useTokenList from '../hooks/useTokenList'
+import SelectCryptoModal from "../components/SelectCryptoModal";
+import useTokenList, { TokenListItem } from '../hooks/useTokenList'
 
-interface ResultProps{
+export interface ResultProps{
   networkFee: number;
   processingFee: number;
   withdrawalMethod: string;
@@ -15,6 +15,7 @@ interface ResultProps{
 
 const Trasfer: FunctionComponent = () => {
   const refreshRate = 20;
+  const [selectedCrypto, setSelectedCrypto] = useState<TokenListItem>();
   const [quote, setQuote] = useState();
   const [amount, setAmount] = useState(0);
   const [fiatAmount, setfiatAmount] = useState(0);
@@ -68,12 +69,12 @@ const Trasfer: FunctionComponent = () => {
 
   }
 
-  const showDigitalModal = function(e) {
-
-  }
-
   const handleValueChanged = function(e, value){
-    console.log(e.target.name);
+    setfiatAmount(value);
+  }
+  
+  const onCryptoSelected = function(e, value){
+    setSelectedCrypto(value);
   }
 
   return (
@@ -90,7 +91,7 @@ const Trasfer: FunctionComponent = () => {
           </div>
           <div className="col-span-2 flex">
             <div className="w-100 m-auto grow ">
-              <SelectModal items={tokenList}/>
+              <SelectCryptoModal items={tokenList} onCryptoSelected={onCryptoSelected}/>
             </div>
           </div>
         </div>
@@ -139,7 +140,7 @@ const Trasfer: FunctionComponent = () => {
         }
       </div>
       <div className="mx-3">
-        <Button block type="primary" className="font-bold rounded-xl">SELL NOW</Button>
+        <Button block type="primary" className='font-bold rounded-xl'>SELL NOW</Button>
       </div>
 
    </MainLayout>
