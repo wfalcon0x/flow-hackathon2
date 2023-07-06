@@ -5,7 +5,7 @@ import elementStyles from '../styles/Elements.module.css'
 import { Button, Input, Modal } from 'antd'
 import React, { PropsWithChildren, useEffect, useReducer, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronDown, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown, faCross, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { TokenListItem } from '../hooks/useTokenList'
 
 export interface OnCryptoSelected{(
@@ -78,11 +78,15 @@ export default function SelectCryptoModal({children, ...props} : PropsWithChildr
         <FontAwesomeIcon size="xs" icon={faChevronDown}/>
       </Button>
       {showModal &&
-        <div key="modal" className={`absolute overflow-auto bg-white top-0 left-0 w-full h-full z-50 p-3 mb-7`}
+        <div key="modal" className={`absolute overflow-auto bg-white top-0 left-0 w-full h-full z-50 p-3 mb-7 rounded-2xl`}
           ref={modal}
         >
+          <div className='mb-3'>
+            <div className='text-center text-bold'>Select a Cryptocurrency</div>
+          </div>
+          <Button type="ghost" className='absolute top-1 right-3' onClick={handleCancel}><FontAwesomeIcon size='2x' icon={faXmark}/></Button>
           <Input
-            className='mb-1'
+            className='mb-1 rounded-full'
             onChange={(e)=> handleSearch(e, e.target.value)}
             suffix={
               <FontAwesomeIcon icon={faMagnifyingGlass}></FontAwesomeIcon>
@@ -92,13 +96,13 @@ export default function SelectCryptoModal({children, ...props} : PropsWithChildr
           {displayingList && displayingList.map((item) => 
             <li onClick={(e) => handleSelect(e, item)} key={item.id} className='w-full bg-gray-200 hover:bg-gray-400 px-3 py-2 my-2 rounded-xl text-sm text-default'>
               <div className='flex justify-between items-center'>
-                <div><img src={item.logo} className="w-6 h-6" /></div><div className='w-full hover:bg-gray-400 p-2 rounded-xl text-right'>{'0.00000000'}</div>
+                <div className='flex justify-items-start gap-2 items-center'><img src={item.logo} className="w-6 h-6" /> <span> {item.symbol}</span></div><div className='p-2 rounded-xl text-right'>{'0.00000000'}</div>
               </div>
               <div className='text-xs text-default'>{item.id}</div>
             </li>
           )}
           </ul>
-          <Button type="primary" className='absolute bottom-3 right-3' onClick={handleCancel}>Cancel</Button>
+          
         </div>
       }
     </div>
