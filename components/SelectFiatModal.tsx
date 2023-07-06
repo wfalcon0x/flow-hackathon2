@@ -13,6 +13,8 @@ export interface OnFiatSelected{(
   crypto: CurrencyListItem) : void
 }
 
+
+
 type data = {
   items: CurrencyListItem[]
   onFiatSelected?: OnFiatSelected
@@ -28,6 +30,11 @@ export default function SelectFiatModal({children, ...props} : PropsWithChildren
   const modal = useRef<HTMLDivElement>();
   const selectModal = useRef<HTMLDivElement>();
   
+
+  useEffect(() => {
+    props.onFiatSelected(null, selectedFiat);
+  }, []);
+
   useEffect(() => {
     setDisplayingList(props.items);
   }, [props.items]);

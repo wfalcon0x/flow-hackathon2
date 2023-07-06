@@ -12,7 +12,7 @@ import SelectCryptoModal from "../components/SelectCryptoModal";
 import useTokenList, { TokenListItem } from "../hooks/useTokenList";
 import useCurrencyList, { CurrencyListItem } from "../hooks/useCurrencyList";
 import SelectFiatModal from "../components/SelectFiatModal";
-import { getCurrencySymbol } from "../helpers/currency";
+import getSymbolFromCurrency from 'currency-symbol-map'
 
 export interface FeeBase {
   description: string;
@@ -64,12 +64,6 @@ const Trasfer: FunctionComponent = () => {
 
   useEffect(() => {
     callAPI();
-    if(selectedFiat != undefined){
-      console.log(selectedFiat.id.toUpperCase());
-      setCurrencySymbol(getCurrencySymbol('en-US', selectedFiat.id.toUpperCase()));
-    }
-    // console.log(getCurrencySymbol('en-US', 'CNY'));
-    // setCurrencySymbol(getCurrencySymbol('en-US', 'CNY'));
   }, [cryptoAmount, selectedFiat, selectedCrypto]);
 
   const decreaseNum = () => {
@@ -114,13 +108,11 @@ const Trasfer: FunctionComponent = () => {
 
   const onFiatSelected = function (e, value) {
     setSelectedFiat(value);
+    console.log(value);
+    if(value){
+      setCurrencySymbol(getSymbolFromCurrency(value.id.toUpperCase()));
+    }
   };
-
-  const numberFormat = (value) =>
-  new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'INR'
-  }).format(value);
 
   return (
     <MainLayout>
@@ -189,9 +181,9 @@ const Trasfer: FunctionComponent = () => {
           </Button>
         </div>
         { quote &&
-          <div className="flex justify-between">
-            <div className="">{cryptoAmount} {selectedCrypto.symbol.toUpperCase()} @ {currencySymbol}{quote.conversionRate}</div>
-            <div>{fiatAmount}</div>
+          <div className="flex justify-between items-center">
+            <div className="text-lg font-bold">{Number(cryptoAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})} {selectedCrypto.symbol.toUpperCase()} @ {currencySymbol}{quote.conversionRate}</div>
+            <div>{currencySymbol}{Number(fiatAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}</div>
           </div>
         }
         <hr className="h-1 my-1 border-gray-500" />
@@ -201,7 +193,7 @@ const Trasfer: FunctionComponent = () => {
               <span>Network Fee</span>
               <span>
                 {quote &&
-                  <>{quote.fees.breakdowns.find(i => i.description == 'Network Fee').amount}</>
+                  <>{currencySymbol}{Number( quote.fees.breakdowns.find(i => i.description == 'Network Fee').amount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}</>
                 }
               </span>
             </div>
@@ -209,7 +201,7 @@ const Trasfer: FunctionComponent = () => {
               <span>Processing Fee</span>
               <span>
                 {quote &&
-                  <>{quote.fees.breakdowns.find(i => i.description == 'Processing Fee').amount}</>
+                  <>{currencySymbol}{Number(quote.fees.breakdowns.find(i => i.description == 'Processing Fee').amount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}</>
                 }
               </span>
             </div>
