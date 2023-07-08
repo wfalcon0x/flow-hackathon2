@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import SelectCryptoModal from "../components/SelectCryptoModal";
-import useTokenList, { TokenListItem } from "../hooks/useTokenList";
+import useUserTokenList, { UserToken } from "../hooks/useUserTokenList";
 import useCurrencyList, { CurrencyListItem } from "../hooks/useCurrencyList";
 import SelectFiatModal from "../components/SelectFiatModal";
 import getSymbolFromCurrency from 'currency-symbol-map'
@@ -44,7 +44,7 @@ const Trasfer: FunctionComponent = () => {
   
   const [user, setUser] = useState({loggedIn: null});
 
-  const [selectedCrypto, setSelectedCrypto] = useState<TokenListItem>();
+  const [selectedCrypto, setSelectedCrypto] = useState<UserToken>();
   const [selectedFiat, setSelectedFiat] = useState<CurrencyListItem>();
   const [quote, setQuote] = useState<QuoteData>();
   const [currencySymbol, setCurrencySymbol] = useState("");
@@ -53,12 +53,12 @@ const Trasfer: FunctionComponent = () => {
   const [counter, setCounter] = useState(refreshRate);
   const counterRef = useRef<number>();
   const [chevron, setChevron] = useState(faChevronUp);
-  const {tokenList} = useTokenList();
+  const {userTokenList} = useUserTokenList();
   const {currencyList} = useCurrencyList();
 
   const callAPI = async () => {
     try {
-      const res = await fetch("/api/offramp/quote?fiatCurrency={selectedFiat.id.toUpperCase()}&cryptoCurrency={selectedCrypto.symbol}&cryptoAmount={cryptoAmount}");
+      const res = await fetch(`/api/offramp/quote?toFiat=${selectedFiat.id.toUpperCase()}&fromCrypto=${selectedCrypto.symbol}&cryptoAmount=${cryptoAmount}`);
       const data = await res.json();
       setQuote({...data});
       setFiatAmount(data.fiatAmount);
@@ -147,7 +147,7 @@ const Trasfer: FunctionComponent = () => {
           <div className="col-span-2 flex">
             <div className="w-100 m-auto grow ">
               <SelectCryptoModal
-                items={tokenList}
+                items={userTokenList}
                 onCryptoSelected={onCryptoSelected}
               />
             </div>
