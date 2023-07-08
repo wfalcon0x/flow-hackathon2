@@ -6,7 +6,7 @@ import Header from '../components/UI/Header'
 
 export default function MainLayout({ children })  {
   const defaultClassAttributes = "absolute top-[191px] left-[calc(50%_-_215px)] w-[430px] h-[642px] border-8 bg-gray-400 rounded-3xl";
-  const innerDefaultClassAttributes = "bg-white box-border w-full h-full overflow-hidden rounded-2xl";
+  const innerDefaultClassAttributes = "main-app-content bg-white w-full h-full overflow-y-scroll box-border rounded-2xl pt-[80px] pb-9";
   const [size, setSize] = useState([0, 0]);
   const [classAttributes, setClassAttributes] = useState(defaultClassAttributes);
   const [innerClassAttributes, setInnerClassAttributes] = useState(innerDefaultClassAttributes);
@@ -19,7 +19,7 @@ export default function MainLayout({ children })  {
       setSize([window.innerWidth, window.innerHeight]);
       if(window.innerWidth < 500){
         setClassAttributes("h-full");
-        setInnerClassAttributes("bg-white w-full h-full overflow-hidden p-2 test");
+        setInnerClassAttributes("main-app-content bg-white w-full h-full overflow-y-scroll scr px-2 pt-[64px] pb-9");
       }
       else{
         setClassAttributes(defaultClassAttributes);
@@ -35,13 +35,15 @@ export default function MainLayout({ children })  {
   return (
     <div className="relative bg-purple w-100 h-screen min-h-[1024px]">
       <div id="main-app-container" className={classAttributes}>
+        <Header />
         <div className={innerClassAttributes}>
-          <Header />
           <section className="relative">
             {children}
           </section>
         </div>
+        <Footer />
       </div>
+      
     </div>
   )
 }

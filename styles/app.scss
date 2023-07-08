@@ -28,6 +28,14 @@ body{
   }
 }
 
+.main-app-content {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.main-app-content::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
 .gradient-text {
     //background: -webkit-linear-gradient(90.19deg,_#eb98fd,_#6ab7ff);
     background: linear-gradient(90.19deg,#eb98fd,#6ab7ff);

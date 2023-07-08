@@ -94,11 +94,13 @@ export default function MobileMenu() {
                 </svg>
               </Link>
             </li> */}
+            { user.loggedIn && 
             <li>
               <Link href="#" className="flex font-medium w-full text-primary hover:text-gray-900 hover:bg-[#E29AFD] hover:text-[#BF3DDB] p-2 justify-start gap-3 items-center" onClick={() => handleLogout()}>
                 <FontAwesomeIcon icon={faRightFromBracket} transform={{ rotate: 180 }} /> Logout
               </Link>
             </li>
+            }
           </ul>          
         </Transition>
       </div>
