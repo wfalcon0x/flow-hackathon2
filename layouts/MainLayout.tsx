@@ -34,6 +34,9 @@ export default function MainLayout({ children })  {
 
   return (
     <div className="relative bg-purple w-100 h-screen min-h-[1024px]">
+      <div className='text-white p-12'>
+        <img src="/logo.svg" alt="" />
+      </div>
       <div id="main-app-container" className={classAttributes}>
         <Header />
         <div className={innerClassAttributes}>
@@ -43,7 +46,13 @@ export default function MainLayout({ children })  {
         </div>
         <Footer />
       </div>
-      
+      <div className="absolute bottom-[-1px] w-full h-[297.93px] flex items-end">
+        <img
+          className='w-full h-auto'
+          alt=""
+          src="/vector.svg"
+        />
+      </div>
     </div>
   )
 }

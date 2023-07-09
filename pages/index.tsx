@@ -129,6 +129,15 @@ const Trasfer: FunctionComponent = () => {
     }
   };
 
+  const getBreakdowns = function() { 
+    if (quote && quote.fees && quote.fees.breakdowns && quote.fees.breakdowns.length > 0){
+      return quote.fees.breakdowns;
+    }
+    else{
+      return [];
+    }
+  };
+
   return (
     <MainLayout>
       <div className="bg-gray-200 opacity-90 p-3 align mx-3 my-6 align-middle rounded-xl">
@@ -198,28 +207,18 @@ const Trasfer: FunctionComponent = () => {
         { quote &&
           <div className="flex justify-between items-center">
             <div className="text-lg font-bold">{Number(cryptoAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})} {selectedCrypto.symbol.toUpperCase()} @ {currencySymbol}{quote.conversionRate}</div>
-            <div>{currencySymbol}{Number(fiatAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}</div>
+            <div>{currencySymbol} {Number(fiatAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}</div>
           </div>
         }
         <hr className="h-1 my-1 border-gray-500" />
         {chevron == faChevronUp && (
           <div>
-            <div className="flex justify-between">
-              <span>Network Fee</span>
-              <span>
-                {quote &&
-                  <>{currencySymbol}{Number( quote.fees.breakdowns.find(i => i.description == 'Network Fee').amount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}</>
-                }
-              </span>
-            </div>
-            <div className="flex justify-between">
-              <span>Processing Fee</span>
-              <span>
-                {quote &&
-                  <>{currencySymbol}{Number(quote.fees.breakdowns.find(i => i.description == 'Processing Fee').amount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}</>
-                }
-              </span>
-            </div>
+            {getBreakdowns && getBreakdowns().map((item) => 
+              <div key={item.description.replace(" ", "_")} className="flex justify-between">
+                <span>{item.description}</span>
+                <span>{currencySymbol} {item.amount.toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}</span>
+              </div>
+            )}
             <div className="flex justify-between">
               <span>Withdrawal Method</span>
               <span>VISA Direct</span>
