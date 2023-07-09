@@ -1,31 +1,28 @@
-import * as fcl from '@onflow/fcl'
-import useCurrentUser from '../hooks/useCurrentUser'
-import navbarStyles from '../styles/Navbar.module.css'
-import elementStyles from '../styles/Elements.module.css'
 import { Button, Input, Modal } from 'antd'
 import React, { PropsWithChildren, useEffect, useReducer, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faCross, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { TokenListItem } from '../hooks/useTokenList'
+import { UserToken } from '../hooks/useUserTokenList'
 
 export interface OnCryptoSelected{(
   e: React.MouseEventHandler<HTMLDivElement>,
-  crypto: TokenListItem) : void
+  crypto: UserToken) : void
 }
 
 type data = {
-  items: TokenListItem[]
+  items: UserToken[]
   onCryptoSelected?: OnCryptoSelected
 }
 
 export default function SelectCryptoModal({children, ...props} : PropsWithChildren<data>) {
   const [showModal, setShowModal] = useState(false);
-  const [selectedCrypto, setSelectedCrypto] = useState<TokenListItem>({
+  const [selectedCrypto, setSelectedCrypto] = useState<UserToken>({
     id: "A.7e60df042a9c0868.FlowToken",
     logo: "https://cdn.jsdelivr.net/gh/FlowFans/flow-token-list@main/token-registry/A.1654653399040a61.FlowToken/logo.svg",
-    symbol: "FLOW"
+    symbol: "FLOW",
+    balance: ""
   });
-  const [displayingList, setDisplayingList] = useState<TokenListItem[]>();
+  const [displayingList, setDisplayingList] = useState<UserToken[]>();
   const modal = useRef<HTMLDivElement>();
   const selectModal = useRef<HTMLDivElement>();
   
@@ -103,7 +100,7 @@ export default function SelectCryptoModal({children, ...props} : PropsWithChildr
           {displayingList && displayingList.map((item) => 
             <li onClick={(e) => handleSelect(e, item)} key={item.id} className='w-full bg-gray-200 hover:bg-gray-400 px-3 py-2 my-2 rounded-xl text-sm text-default'>
               <div className='flex justify-between items-center'>
-                <div className='flex justify-items-start gap-2 items-center'><img src={item.logo} className="w-6 h-6" /> <span> {item.symbol}</span></div><div className='p-2 rounded-xl text-right'>{'0.00000000'}</div>
+                <div className='flex justify-items-start gap-2 items-center'><img src={item.logo} className="w-6 h-6" /> <span> {item.symbol}</span></div><div className='p-2 rounded-xl text-right'>{item.balance}</div>
               </div>
               <div className='text-xs text-default'>{item.id}</div>
             </li>
