@@ -1,6 +1,4 @@
-import { TokenListProvider, ENV, Strategy } from 'flow-native-token-registry'
 import { useEffect, useState } from 'react'
-import useConfig from './useConfig'
 
 export interface CurrencyListItem {
   id: string
