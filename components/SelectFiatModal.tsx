@@ -17,10 +17,11 @@ export interface OnFiatSelected{(
 
 type data = {
   items: CurrencyListItem[]
-  onFiatSelected?: OnFiatSelected
+  onFiatSelected?: OnFiatSelected,
+  readonly?: boolean;
 }
 
-export default function SelectFiatModal({children, ...props} : PropsWithChildren<data>) {
+export default function SelectFiatModal({children, readonly = false, ...props} : PropsWithChildren<data>) {
   const [showModal, setShowModal] = useState(false);
   const [selectedFiat, setSelectedFiat] = useState<CurrencyListItem>({
     id: 'gbp',
@@ -32,7 +33,9 @@ export default function SelectFiatModal({children, ...props} : PropsWithChildren
   
 
   useEffect(() => {
-    props.onFiatSelected(null, selectedFiat);
+    if(props.onFiatSelected){
+      props.onFiatSelected(null, selectedFiat);
+    }
   }, []);
 
   useEffect(() => {
@@ -40,12 +43,11 @@ export default function SelectFiatModal({children, ...props} : PropsWithChildren
   }, [props.items]);
   
   const showModalHandler = function(e){
-    if(showModal){
-      selectModal.current.append(modal.current);  
-    }
-    setShowModal(!showModal);
-    if(showModal){
-
+    if(!readonly){
+      if(showModal){
+        selectModal.current.append(modal.current);  
+      }
+      setShowModal(!showModal);
     }
   }
 
@@ -65,7 +67,9 @@ export default function SelectFiatModal({children, ...props} : PropsWithChildren
 
   const handleSelect = (e, item) => {
     setSelectedFiat(item);
-    props.onFiatSelected(e, item);
+    if(props.onFiatSelected){
+      props.onFiatSelected(e, item);
+    }
     handleCancel();
   }
 

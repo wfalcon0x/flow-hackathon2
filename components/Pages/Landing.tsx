@@ -15,9 +15,10 @@ import SelectFiatModal from "../../components/SelectFiatModal";
 import getSymbolFromCurrency from 'currency-symbol-map'
 import useCurrentUser from "../../hooks/useCurrentUser";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import { IOnSetNavigatePage, NavigatePage, QuoteData } from "../../helpers/interfaces";
+import { IOnCryptoInfoSelected, IOnSetNavigatePage, NavigatePage, QuoteData } from "../../helpers/interfaces";
 
 type Props = {
+  OnCyptoInfoSelected: IOnCryptoInfoSelected
   OnSetNavigatePage?: IOnSetNavigatePage
 }
 
@@ -123,6 +124,7 @@ export default function Landing({...props}:PropsWithRef<Props>) {
 
   const handleSellNow = () => {
     if(user.loggedIn){
+      props.OnCyptoInfoSelected(selectedCrypto, cryptoAmount, selectedFiat);
       props.OnSetNavigatePage(NavigatePage.StartSelling);
     }
     else{

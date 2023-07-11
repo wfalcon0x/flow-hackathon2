@@ -12,9 +12,10 @@ export interface OnCryptoSelected{(
 type data = {
   items: UserToken[]
   onCryptoSelected?: OnCryptoSelected
+  readonly?: boolean;
 }
 
-export default function SelectCryptoModal({children, ...props} : PropsWithChildren<data>) {
+export default function SelectCryptoModal({children, readonly = false, ...props} : PropsWithChildren<data>) {
   const [showModal, setShowModal] = useState(false);
   const [selectedCrypto, setSelectedCrypto] = useState<UserToken>({
     id: "A.7e60df042a9c0868.FlowToken",
@@ -29,14 +30,18 @@ export default function SelectCryptoModal({children, ...props} : PropsWithChildr
 
   useEffect(() => {
     setDisplayingList(props.items);
-    props.onCryptoSelected(null, selectedCrypto);
+    if(props.onCryptoSelected){
+      props.onCryptoSelected(null, selectedCrypto);
+    }
   }, [props.items]);
   
   const showModalHandler = function(e){
-    if(showModal){
-      selectModal.current.append(modal.current);  
+    if(!readonly){
+      if(showModal){
+        selectModal.current.append(modal.current);  
+      }
+      setShowModal(!showModal);
     }
-    setShowModal(!showModal);
   }
 
   useEffect(() => {
