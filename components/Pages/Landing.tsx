@@ -18,8 +18,8 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { IOnCryptoInfoSelected, IOnSetNavigatePage, NavigatePage, QuoteData } from "../../helpers/interfaces";
 
 type Props = {
-  OnCyptoInfoSelected: IOnCryptoInfoSelected
-  OnSetNavigatePage?: IOnSetNavigatePage
+  onCyptoInfoSelected: IOnCryptoInfoSelected
+  onSetNavigatePage?: IOnSetNavigatePage
 }
 
 export default function Landing({...props}:PropsWithRef<Props>) {
@@ -125,8 +125,8 @@ export default function Landing({...props}:PropsWithRef<Props>) {
   const handleSellNow = () => {
     if(user.loggedIn){
       if(cryptoAmount > 0){
-        props.OnCyptoInfoSelected(selectedCrypto, cryptoAmount, selectedFiat, fiatAmount);
-        props.OnSetNavigatePage(NavigatePage.StartSelling);
+        props.onCyptoInfoSelected(selectedCrypto, cryptoAmount, selectedFiat, fiatAmount);
+        props.onSetNavigatePage(NavigatePage.StartSelling);
       }
       else{
         cryptoInput.current.focus();

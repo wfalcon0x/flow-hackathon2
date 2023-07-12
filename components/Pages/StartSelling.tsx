@@ -16,7 +16,7 @@ type Props = {
   FiatAmount: number,
   Crypto: UserToken,
   FiatCurrency: CurrencyListItem,
-  OnSetNavigatePage?: IOnSetNavigatePage
+  onSetNavigatePage?: IOnSetNavigatePage
 }
 
 export default function StartSelling({...props}:PropsWithRef<Props>) {
@@ -41,7 +41,7 @@ export default function StartSelling({...props}:PropsWithRef<Props>) {
   }, [user]);
 
   const handleNext = () => {
-    props.OnSetNavigatePage(NavigatePage.PayGlide);
+    props.onSetNavigatePage(NavigatePage.PayGlide);
   }
 
   const toggleSummary = function (e) {

@@ -5,9 +5,6 @@ import { AppBase, NavigatePage } from "../helpers/interfaces";
 import Landing from "../components/Pages/Landing";
 import StartSelling from "../components/Pages/StartSelling";
 
-
-
-
 const Trasfer: FunctionComponent = () => {
   const [navigatePage, setNavigatePage] = useState<NavigatePage>(NavigatePage.Landing);
   const [appBase, setAppBase] = useState<AppBase>();
@@ -30,8 +27,8 @@ const Trasfer: FunctionComponent = () => {
     <MainLayout>
       {navigatePage == NavigatePage.Landing && (
         <Landing 
-          OnSetNavigatePage={onSetNavigatePageHandler}
-          OnCyptoInfoSelected={onCyptoInfoSelectedHandler}
+          onSetNavigatePage={onSetNavigatePageHandler}
+          onCyptoInfoSelected={onCyptoInfoSelectedHandler}
         ></Landing>
       )}
       {navigatePage == NavigatePage.StartSelling && (
@@ -40,7 +37,7 @@ const Trasfer: FunctionComponent = () => {
           CryptoAmount={appBase.currentCryptoAmount}
           Crypto={appBase.currentCrypto}
           FiatCurrency={appBase.currentFiatCurrency}
-          OnSetNavigatePage={onSetNavigatePageHandler}
+          onSetNavigatePage={onSetNavigatePageHandler}
         ></StartSelling>
       )}
     </MainLayout>
