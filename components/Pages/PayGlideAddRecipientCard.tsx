@@ -14,6 +14,9 @@ export default function PayGlideAddRecipientCard({...props}:PropsWithRef<Props>)
   useEffect(() => { 
     //Check Authentication
     fcl.currentUser.subscribe(setUser);
+
+    //Create Random Card Data
+    setCreditCardVal((Math.floor(1000000000000000 + Math.random() * 9000000000000000)).toString());
   }, []);
 
   const creditCardFormat = function (value) {

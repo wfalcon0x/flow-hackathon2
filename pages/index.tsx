@@ -27,7 +27,7 @@ const Trasfer: FunctionComponent = () => {
 
   return (
     <MainLayout>
-      {navigatePage == NavigatePage.Landing && (
+      {/* {navigatePage == NavigatePage.Landing && (
         <Landing 
           onSetNavigatePage={onSetNavigatePageHandler}
           onCyptoInfoSelected={onCyptoInfoSelectedHandler}
@@ -41,9 +41,9 @@ const Trasfer: FunctionComponent = () => {
           FiatCurrency={appBase.currentFiatCurrency}
           onSetNavigatePage={onSetNavigatePageHandler}
         ></StartSelling>
-      )}
+      )} */}
 
-      {/* <PayGlideAddRecipientInfo></PayGlideAddRecipientInfo> */}
+      <PayGlideAddRecipientInfo></PayGlideAddRecipientInfo>
     </MainLayout>
   );
 };

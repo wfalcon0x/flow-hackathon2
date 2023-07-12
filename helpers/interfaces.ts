@@ -61,3 +61,11 @@ export interface IOnCryptoInfoSelected {
 export interface IOnSetNavigatePage {
   (page: NavigatePage): void;
 }
+
+export interface RecipientInfo {
+  firstName: string;
+  lastName: string;
+  city: string;
+  state: string;
+  phone: string;
+}

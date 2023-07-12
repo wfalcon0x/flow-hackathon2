@@ -1,5 +1,6 @@
 import { PropsWithRef, useEffect, useState } from "react"
-import { IOnSetNavigatePage, NavigatePage } from "../../helpers/interfaces"
+import { randFirstName, randLastName, randAddress, randPhoneNumber } from '@ngneat/falso';
+import { IOnSetNavigatePage, NavigatePage, RecipientInfo } from "../../helpers/interfaces"
 import * as fcl from "@onflow/fcl";
 import { Button, Input } from "antd";
 
@@ -9,10 +10,19 @@ type Props = {
 
 export default function PayGlideAddRecipientInfo({...props}:PropsWithRef<Props>) {
   const [user, setUser] = useState({loggedIn: null});
+  const [recipientInfo, setRecipientInfo] = useState<RecipientInfo>();
 
   useEffect(() => { 
     //Check Authentication
     fcl.currentUser.subscribe(setUser);
+    const address = randAddress();
+    setRecipientInfo({
+      city: address.city,
+      state: address.country,
+      firstName: randFirstName(),
+      lastName: randLastName(),
+      phone: randPhoneNumber() 
+    })
   }, []);
 
   return (
@@ -20,15 +30,25 @@ export default function PayGlideAddRecipientInfo({...props}:PropsWithRef<Props>)
       <div className="w-100 grow mx-3 mb-3 mt-3">
         <div className="font-bold text-xl">Add contact's info</div>
         <label>First Name</label>
-        <Input className="rounded-full gradient-border-hover gradient-border-focus focus:border-none bg-gray-100 border-gray-200 mb-3"/>
+        <Input className="rounded-full gradient-border-hover gradient-border-focus focus:border-none bg-gray-100 border-gray-200 mb-3"
+          value={recipientInfo ? recipientInfo.firstName : ""}
+        />
         <label>Last Name</label>
-        <Input className="rounded-full gradient-border-hover gradient-border-focus focus:border-none bg-gray-100 border-gray-200 mb-3"/>
+        <Input className="rounded-full gradient-border-hover gradient-border-focus focus:border-none bg-gray-100 border-gray-200 mb-3"
+          value={recipientInfo ? recipientInfo.lastName : ""}
+        />
         <label>City</label>
-        <Input className="rounded-full gradient-border-hover gradient-border-focus focus:border-none bg-gray-100 border-gray-200 mb-3"/>
+        <Input className="rounded-full gradient-border-hover gradient-border-focus focus:border-none bg-gray-100 border-gray-200 mb-3"
+          value={recipientInfo ? recipientInfo.city : ""}
+        />
         <label>State</label>
-        <Input className="rounded-full gradient-border-hover gradient-border-focus focus:border-none bg-gray-100 border-gray-200 mb-3"/>
+        <Input className="rounded-full gradient-border-hover gradient-border-focus focus:border-none bg-gray-100 border-gray-200 mb-3"
+          value={recipientInfo ? recipientInfo.state : ""}
+        />
         <label>Phone</label>
-        <Input className="rounded-full gradient-border-hover gradient-border-focus focus:border-none bg-gray-100 border-gray-200 mb-3"/>
+        <Input className="rounded-full gradient-border-hover gradient-border-focus focus:border-none bg-gray-100 border-gray-200 mb-3"
+          value={recipientInfo ? recipientInfo.phone : ""}
+        />
       </div>
       <div className="absolute bottom-3 flex justify-between w-full px-3">
         <Button className="text-primary border-none font-bold" >Back</Button>
