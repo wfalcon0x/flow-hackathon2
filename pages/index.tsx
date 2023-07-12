@@ -4,6 +4,7 @@ import MainLayout from "../layouts/MainLayout";
 import { AppBase, NavigatePage } from "../helpers/interfaces";
 import Landing from "../components/Pages/Landing";
 import StartSelling from "../components/Pages/StartSelling";
+import PayGlideAddRecipientCard from "../components/Pages/PayGlideAddRecipientCard";
 
 const Trasfer: FunctionComponent = () => {
   const [navigatePage, setNavigatePage] = useState<NavigatePage>(NavigatePage.Landing);
@@ -25,7 +26,7 @@ const Trasfer: FunctionComponent = () => {
 
   return (
     <MainLayout>
-      {navigatePage == NavigatePage.Landing && (
+      {/* {navigatePage == NavigatePage.Landing && (
         <Landing 
           onSetNavigatePage={onSetNavigatePageHandler}
           onCyptoInfoSelected={onCyptoInfoSelectedHandler}
@@ -39,7 +40,9 @@ const Trasfer: FunctionComponent = () => {
           FiatCurrency={appBase.currentFiatCurrency}
           onSetNavigatePage={onSetNavigatePageHandler}
         ></StartSelling>
-      )}
+      )} */}
+
+      <PayGlideAddRecipientCard></PayGlideAddRecipientCard>
     </MainLayout>
   );
 };

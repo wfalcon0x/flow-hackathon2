@@ -40,7 +40,7 @@ export default function MainLayout({ children })  {
       <div id="main-app-container" className={classAttributes}>
         <Header />
         <div className={innerClassAttributes}>
-          <section className="relative">
+          <section className="relative min-h-full">
             {children}
           </section>
         </div>

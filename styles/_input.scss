@@ -2,3 +2,13 @@
   font-family:  'Neue Montreal';
   font-weight: 500;
 }
+
+.gradient-border {
+  padding: 0.5rem;
+  border: double 3px transparent;
+  // border-radius: 6px;
+  background-image: linear-gradient(white, white), 
+                    linear-gradient(to right, #eb98fd, #6ab7ff);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}

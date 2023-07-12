@@ -6,7 +6,7 @@ type Props = {
   OnSetNavigatePage?: IOnSetNavigatePage
 }
 
-export default function PayGlideAddRecipient({...props}:PropsWithRef<Props>) {
+export default function PayGlideAddRecipientInfo({...props}:PropsWithRef<Props>) {
   const [user, setUser] = useState({loggedIn: null});
 
   useEffect(() => { 
