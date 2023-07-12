@@ -16,12 +16,13 @@ const Trasfer: FunctionComponent = () => {
     setNavigatePage(page);
   };
 
-  const onCyptoInfoSelectedHandler = function (selectedCrypto, cryptoAmount, selectedFiat) {
+  const onCyptoInfoSelectedHandler = function (selectedCrypto, cryptoAmount, selectedFiat, fiatAmount) {
     setAppBase((prevState) => ({
       ...prevState,
       currentCrypto: selectedCrypto,
       currentFiatCurrency: selectedFiat,
-      currentCryptoAmount: cryptoAmount
+      currentCryptoAmount: cryptoAmount,
+      currentFiatAmount: fiatAmount
     }));
   };
 
@@ -35,6 +36,7 @@ const Trasfer: FunctionComponent = () => {
       )}
       {navigatePage == NavigatePage.StartSelling && (
         <StartSelling
+          FiatAmount={appBase.currentFiatAmount}
           CryptoAmount={appBase.currentCryptoAmount}
           Crypto={appBase.currentCrypto}
           FiatCurrency={appBase.currentFiatCurrency}

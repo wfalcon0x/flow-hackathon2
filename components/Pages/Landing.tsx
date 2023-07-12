@@ -1,7 +1,7 @@
 import { ChangeEvent, PropsWithRef, useEffect, useRef, useState } from "react";
 import * as fcl from "@onflow/fcl";
 import MainLayout from "../../layouts/MainLayout";
-import { Input, Space, Select, Button, InputNumber } from "antd";
+import { Input, Space, Select, Button, InputNumber, InputRef } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faClock,
@@ -26,7 +26,7 @@ export default function Landing({...props}:PropsWithRef<Props>) {
   const refreshRate = 20;
   
   const [user, setUser] = useState({loggedIn: null});
-
+  const cryptoInput = useRef<InputRef>();
   const [selectedCrypto, setSelectedCrypto] = useState<UserToken>();
   const [selectedFiat, setSelectedFiat] = useState<CurrencyListItem>();
   const [quote, setQuote] = useState<QuoteData>();
@@ -124,8 +124,14 @@ export default function Landing({...props}:PropsWithRef<Props>) {
 
   const handleSellNow = () => {
     if(user.loggedIn){
-      props.OnCyptoInfoSelected(selectedCrypto, cryptoAmount, selectedFiat);
-      props.OnSetNavigatePage(NavigatePage.StartSelling);
+      if(cryptoAmount > 0){
+        props.OnCyptoInfoSelected(selectedCrypto, cryptoAmount, selectedFiat, fiatAmount);
+        props.OnSetNavigatePage(NavigatePage.StartSelling);
+      }
+      else{
+        cryptoInput.current.focus();
+        cryptoInput.current.select();
+      }
     }
     else{
       fcl.logIn();
@@ -140,6 +146,7 @@ export default function Landing({...props}:PropsWithRef<Props>) {
             <div className="w-100 m-auto grow mb-3">
               <label className="text-xs text-default">You pay</label>
               <Input
+                ref={cryptoInput}
                 id="cryptoAmount"
                 value={cryptoAmount}
                 onChange={(e) => handleValueChanged(e, e.target.value)}

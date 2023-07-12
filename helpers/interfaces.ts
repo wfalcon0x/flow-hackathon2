@@ -6,7 +6,11 @@ export enum NavigatePage {
   Landing = 1,
   StartSelling = 2,
   PayGlide = 3,
-  Right,
+  PayGlideEmail = 4,
+  PayGlideOTP = 5,
+  PayGlideConnected = 6,
+  PayGlideAddRecipient = 7,
+  PayGlideConnectedRecipient = 8
 }
 
 export interface AppBase {
@@ -14,6 +18,7 @@ export interface AppBase {
   currentCrypto: UserToken;
   currentCryptoAmount: number;
   currentFiatCurrency: CurrencyListItem;
+  currentFiatAmount: number;
 }
 
 export interface FeeBase {
@@ -37,12 +42,19 @@ export interface QuoteData {
   updatedAt: string;
   expiresAt: string;
 }
+export interface UseQuoteInput {
+  fiatCurrency: string;
+  cryptoSymbol: string;
+  cryptoAmount: number;
+}
+
 
 export interface IOnCryptoInfoSelected {
   (
     currentCrypto: UserToken,
     currentCryptoAmount: number,
-    currentFiatCurrency: CurrencyListItem
+    currentFiatCurrency: CurrencyListItem,
+    currentFiatAmount: number,
   ): void;
 }
 
