@@ -8,7 +8,7 @@ export default function NextButton({...props}:PropsWithRef<Props>) {
   return (
     <button 
       onClick={() => props.onClickNext()}
-      className="cursor-pointer [border:none] py-[17px] px-[22px] bg-[transparent] absolute top-[483px] left-[250px] rounded-[31.36px] [background:linear-gradient(90.19deg,_#eb98fd,_#6ab7ff)] w-[124px] h-12 flex flex-row box-border items-center justify-center gap-[8px]">
+      className="cursor-pointer [border:none] py-[17px] px-[22px] bg-[transparent] absolute bottom-20 right-3 rounded-[31.36px] [background:linear-gradient(90.19deg,_#eb98fd,_#6ab7ff)] w-[124px] h-12 flex flex-row box-border items-center justify-center gap-[8px]">
       <b className="relative text-base font-outfit text-white text-center">
         Next
       </b>

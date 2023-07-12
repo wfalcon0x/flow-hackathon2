@@ -31,7 +31,7 @@ export default function Landing({...props}:PropsWithRef<Props>) {
   const [selectedFiat, setSelectedFiat] = useState<CurrencyListItem>();
   const [quote, setQuote] = useState<QuoteData>();
   const [currencySymbol, setCurrencySymbol] = useState("");
-  const [cryptoAmount, setCryptoAmount] = useState(0);
+  const [cryptoAmount, setCryptoAmount] = useState(100);
   const [fiatAmount, setFiatAmount] = useState(0);
   const [counter, setCounter] = useState(refreshRate);
   const counterRef = useRef<number>();

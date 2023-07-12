@@ -1,20 +1,11 @@
-import * as fcl from '@onflow/fcl'
-import useCurrentUser from '../hooks/useCurrentUser'
-import navbarStyles from '../styles/Navbar.module.css'
-import elementStyles from '../styles/Elements.module.css'
-import { Button, Input, Modal } from 'antd'
-import React, { PropsWithRef, useEffect, useReducer, useRef, useState } from 'react'
+import { Button } from 'antd'
+import React, { PropsWithRef, useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { CurrencyListItem } from '../hooks/useCurrencyList'
+import { faArrowRight, faXmark } from '@fortawesome/free-solid-svg-icons'
 import LoginHeroImage from './UI/LoginHeroImage'
 import EmailInput from './UI/EmailInput'
 import NextButton from './UI/NextButton'
-
-export interface OnFiatSelected{(
-  e: React.MouseEventHandler<HTMLDivElement>,
-  crypto: CurrencyListItem) : void
-}
+import Footer from './UI/Footer'
 
 type Props = {
   readonly?: boolean
@@ -25,7 +16,6 @@ export default function OpenOTPModal({...props}:PropsWithRef<Props>) {
   const [showModal, setShowModal] = useState(false)
   const modal = useRef<HTMLDivElement>()
   const selectModal = useRef<HTMLDivElement>()
-  
   
   const showModalHandler = function(e){
     if(!props.readonly){
@@ -79,6 +69,7 @@ export default function OpenOTPModal({...props}:PropsWithRef<Props>) {
           <Button type="ghost" className='absolute top-1 right-3 text-white' onClick={handleCancel}><FontAwesomeIcon size='2x' icon={faXmark}/></Button>
           <EmailInput/>
           <NextButton onClickNext={() => handleOtpVerified()}/>
+          <Footer/>
         </div>
       }
     </div>
