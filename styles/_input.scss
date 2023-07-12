@@ -3,12 +3,44 @@
   font-weight: 500;
 }
 
+// .ant-input.gradient-border:focus, .ant-input.gradient-border:hover{
+//   padding: 0.5rem !important;
+//   border: double 3px transparent !important;
+//   // border-radius: 6px;
+//   background-image: linear-gradient(white, white), 
+//                     linear-gradient(to right, #eb98fd, #6ab7ff) !important;
+//   background-origin: border-box !important;
+//   background-clip: padding-box, border-box !important;
+// }
+
 .gradient-border {
-  padding: 0.5rem;
-  border: double 3px transparent;
+  padding: 0.5rem !important;
+  border: double 3px transparent !important;
   // border-radius: 6px;
   background-image: linear-gradient(white, white), 
-                    linear-gradient(to right, #eb98fd, #6ab7ff);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
+                    linear-gradient(to right, #eb98fd, #6ab7ff) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+}
+
+.gradient-border-hover:hover{
+  padding: 0.5rem !important;
+  border: double 3px transparent !important;
+  // border-radius: 6px;
+  background-image: linear-gradient(white, white), 
+                    linear-gradient(to right, #eb98fd, #6ab7ff) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+  --tw-ring-color: none;
+}
+
+.gradient-border-focus:focus{
+    padding: 0.5rem !important;
+    border: double 3px transparent !important;
+    // border-radius: 6px;
+    background-image: linear-gradient(white, white), 
+                      linear-gradient(to right, #eb98fd, #6ab7ff) !important;
+    background-origin: border-box !important;
+    background-clip: padding-box, border-box !important;
+    --tw-ring-color: none;
 }
