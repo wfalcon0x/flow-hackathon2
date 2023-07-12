@@ -3,6 +3,7 @@ import { IOnSetNavigatePage, NavigatePage } from "../../helpers/interfaces"
 import * as fcl from "@onflow/fcl";
 import SelectCryptoModal from "../SelectCryptoModal";
 import SelectFiatModal from "../SelectFiatModal";
+import OpenOTPModal from "../OpenOTPModal";
 import { Button, Input } from "antd";
 import { CurrencyListItem } from "../../hooks/useCurrencyList";
 import { UserToken } from "../../hooks/useUserTokenList";
@@ -41,7 +42,7 @@ export default function StartSelling({...props}:PropsWithRef<Props>) {
   }, [user]);
 
   const handleNext = () => {
-    props.onSetNavigatePage(NavigatePage.PayGlide);
+    props.onSetNavigatePage(NavigatePage.PayGlideConnectedRecipient);
   }
 
   const toggleSummary = function (e) {
@@ -156,16 +157,7 @@ export default function StartSelling({...props}:PropsWithRef<Props>) {
               </div>
             )}
           </div>
-          <div className="mx-3">
-            <Button
-              block
-              type="primary"
-              className="font-bold rounded-full uppercase"
-              onClick={() => handleNext()}
-            >
-              Next <FontAwesomeIcon className="mx-3" icon={faArrowRight}/>
-            </Button>
-          </div>
+          <OpenOTPModal onOtpVerified={() => handleNext()}/>
         </>
       }
     </>

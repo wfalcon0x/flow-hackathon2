@@ -42,8 +42,10 @@ const Trasfer: FunctionComponent = () => {
           onSetNavigatePage={onSetNavigatePageHandler}
         ></StartSelling>
       )}
-
-      {/* <PayGlideAddRecipientInfo></PayGlideAddRecipientInfo> */}
+      {navigatePage == NavigatePage.PayGlideConnectedRecipient && (
+        <PayGlideAddRecipientCard></PayGlideAddRecipientCard>
+      )}
+      
     </MainLayout>
   );
 };
