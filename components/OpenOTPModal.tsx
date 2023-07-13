@@ -1,4 +1,4 @@
-import { Button } from 'antd'
+import { Button, InputRef } from 'antd'
 import React, { PropsWithRef, useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faXmark } from '@fortawesome/free-solid-svg-icons'
@@ -6,24 +6,23 @@ import LoginHeroImage from './UI/LoginHeroImage'
 import EmailInput from './UI/EmailInput'
 import NextButton from './UI/NextButton'
 import Footer from './UI/Footer'
+import { randEmail } from '@ngneat/falso'
 
 type Props = {
-  readonly?: boolean
   onOtpVerified?: Function
 }
 
 export default function OpenOTPModal({...props}:PropsWithRef<Props>) {
   const [showModal, setShowModal] = useState(false)
   const modal = useRef<HTMLDivElement>()
+  const emailInput = useRef<InputRef>()
   const selectModal = useRef<HTMLDivElement>()
   
   const showModalHandler = function(e){
-    if(!props.readonly){
-      if(showModal){
-        selectModal.current.append(modal.current)
-      }
-      setShowModal(!showModal)
+    if(showModal){
+      selectModal.current.append(modal.current)
     }
+    setShowModal(!showModal)
   }
 
   const handleCancel = () => {
@@ -34,7 +33,7 @@ export default function OpenOTPModal({...props}:PropsWithRef<Props>) {
   const handleOtpVerified = () => {
     selectModal.current.append(modal.current)
     setShowModal(false);
-    props.onOtpVerified()
+    props.onOtpVerified(emailInput.current.input.value)
   }
 
   useEffect(() => {
@@ -43,6 +42,7 @@ export default function OpenOTPModal({...props}:PropsWithRef<Props>) {
         const element = document.getElementById("main-app-container")
         element.append(modal.current)
       }
+      emailInput.current.input.value = randEmail();
     }
   }, [showModal])
 
@@ -59,17 +59,19 @@ export default function OpenOTPModal({...props}:PropsWithRef<Props>) {
         </Button>
       </div>
       {showModal &&
-        <div key="modal" className={`absolute overflow-auto bg-white top-0 left-0 w-full h-full z-50 p-3 mb-7 rounded-2xl`}
+        <div key="modal" className={`absolute overflow-auto bg-white top-0 left-0 w-full h-full z-50 mb-7 rounded-2xl`}
           ref={modal}
         >
+          <div className="p-3">
           <div className={``}> 
             <LoginHeroImage/>
           </div>
 
           <Button type="ghost" className='absolute top-1 right-3 text-white' onClick={handleCancel}><FontAwesomeIcon size='2x' icon={faXmark}/></Button>
-          <EmailInput/>
+          <EmailInput inputRef={emailInput}/>
           <NextButton onClickNext={() => handleOtpVerified()}/>
-          <Footer/>
+          </div>
+          <Footer></Footer>
         </div>
       }
     </div>

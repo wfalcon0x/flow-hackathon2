@@ -6,44 +6,50 @@ import Landing from "../components/Pages/Landing";
 import StartSelling from "../components/Pages/StartSelling";
 import PayGlideAddRecipientCard from "../components/Pages/PayGlideAddRecipientCard";
 import PayGlideAddRecipientInfo from "../components/Pages/PayGlideAddRecipientInfo";
+import PayGlideConnectedRecipient from "../components/Pages/PayGlideConnectedRecipient";
 
 const Trasfer: FunctionComponent = () => {
   const [navigatePage, setNavigatePage] = useState<NavigatePage>(NavigatePage.Landing);
   const [appBase, setAppBase] = useState<AppBase>();
 
-  const onSetNavigatePageHandler = function (page) {
+  const onSetNavigatePageHandler = function (page, appBaseData) {
     setNavigatePage(page);
+    setAppBase({
+      ...appBase,
+      ...appBaseData
+    });
   };
 
-  const onCyptoInfoSelectedHandler = function (selectedCrypto, cryptoAmount, selectedFiat, fiatAmount) {
-    setAppBase((prevState) => ({
-      ...prevState,
-      currentCrypto: selectedCrypto,
-      currentFiatCurrency: selectedFiat,
-      currentCryptoAmount: cryptoAmount,
-      currentFiatAmount: fiatAmount
-    }));
-  };
+
+  useEffect(() => { 
+    console.log(appBase);
+  }, [appBase]);
+
 
   return (
     <MainLayout>
       {navigatePage == NavigatePage.Landing && (
-        <Landing 
+        <Landing
           onSetNavigatePage={onSetNavigatePageHandler}
-          onCyptoInfoSelected={onCyptoInfoSelectedHandler}
         ></Landing>
       )}
       {navigatePage == NavigatePage.StartSelling && (
         <StartSelling
-          FiatAmount={appBase.currentFiatAmount}
-          CryptoAmount={appBase.currentCryptoAmount}
-          Crypto={appBase.currentCrypto}
-          FiatCurrency={appBase.currentFiatCurrency}
+          fiatAmount={appBase.currentFiatAmount}
+          cryptoAmount={appBase.currentCryptoAmount}
+          crypto={appBase.currentCrypto}
+          fiatCurrency={appBase.currentFiatCurrency}
           onSetNavigatePage={onSetNavigatePageHandler}
         ></StartSelling>
       )}
       {navigatePage == NavigatePage.PayGlideConnectedRecipient && (
+        <PayGlideConnectedRecipient></PayGlideConnectedRecipient>
+      )}
+      {navigatePage == NavigatePage.PayGlideAddRecipientCard && (
         <PayGlideAddRecipientCard></PayGlideAddRecipientCard>
+      )}
+      {navigatePage == NavigatePage.PayGlideAddRecipientInfo && (
+        <PayGlideAddRecipientInfo></PayGlideAddRecipientInfo>
       )}
       
     </MainLayout>

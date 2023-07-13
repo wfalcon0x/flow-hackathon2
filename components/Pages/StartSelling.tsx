@@ -1,5 +1,5 @@
 import { PropsWithRef, useEffect, useState } from "react"
-import { IOnSetNavigatePage, NavigatePage } from "../../helpers/interfaces"
+import { AppBase, IOnSetNavigatePage, NavigatePage } from "../../helpers/interfaces"
 import * as fcl from "@onflow/fcl";
 import SelectCryptoModal from "../SelectCryptoModal";
 import SelectFiatModal from "../SelectFiatModal";
@@ -13,10 +13,10 @@ import useQuote from "../../hooks/useQuote";
 import getSymbolFromCurrency from "currency-symbol-map";
 
 type Props = {
-  CryptoAmount: number,
-  FiatAmount: number,
-  Crypto: UserToken,
-  FiatCurrency: CurrencyListItem,
+  cryptoAmount: number,
+  fiatAmount: number,
+  crypto: UserToken,
+  fiatCurrency: CurrencyListItem,
   onSetNavigatePage?: IOnSetNavigatePage
 }
 
@@ -25,24 +25,21 @@ export default function StartSelling({...props}:PropsWithRef<Props>) {
   const [chevron, setChevron] = useState(faChevronDown);
   const [currencySymbol, setCurrencySymbol] = useState("");
   const quote = useQuote({
-    fiatCurrency: props.FiatCurrency.id,
-    cryptoSymbol: props.Crypto.symbol,
-    cryptoAmount: props.CryptoAmount
+    fiatCurrency: props.fiatCurrency.id,
+    cryptoSymbol: props.crypto.symbol,
+    cryptoAmount: props.cryptoAmount
   })
   
   useEffect(() => { 
     //Check Authentication
     fcl.currentUser.subscribe(setUser);
-    setCurrencySymbol(getSymbolFromCurrency(props.FiatCurrency.id.toUpperCase()));
-    console.log(quote);
+    setCurrencySymbol(getSymbolFromCurrency(props.fiatCurrency.id.toUpperCase()));
   }, []);
 
-  useEffect(() => { 
-    console.log(user);
-  }, [user]);
-
-  const handleNext = () => {
-    props.onSetNavigatePage(NavigatePage.PayGlideConnectedRecipient);
+  const handleNext = (email) => {
+    props.onSetNavigatePage(NavigatePage.PayGlideConnectedRecipient, {
+      recipientEmail: email
+    });
   }
 
   const toggleSummary = function (e) {
@@ -53,7 +50,6 @@ export default function StartSelling({...props}:PropsWithRef<Props>) {
     }
   };
 
-  
   const getBreakdowns = function() { 
     if (quote && quote.fees && quote.fees.breakdowns && quote.fees.breakdowns.length > 0){
       return quote.fees.breakdowns;
@@ -63,13 +59,12 @@ export default function StartSelling({...props}:PropsWithRef<Props>) {
     }
   };
 
-
   return (
     <>  
       {quote &&
         <>
           <div className="w-100 grow mx-3 mb-3">
-            <label className="text-xs text-default">Connected Wallet to {props.Crypto.symbol}</label>
+            <label className="text-xs text-default">Connected Wallet to {props.crypto.symbol}</label>
             <div className="rounded-full w-full h-10 mx-auto bg-gradient-to-r p-[3px] from-[#eb98fd] to-[#6ab7ff]">
               <div className="flex justify-normal items-center h-full bg-white rounded-full px-4 text-primary text-sm font-bold">
                 <div>
@@ -89,7 +84,7 @@ export default function StartSelling({...props}:PropsWithRef<Props>) {
                   <label className="text-xs text-default">You pay</label>
                   <Input
                     id="cryptoAmount"
-                    value={props.CryptoAmount}
+                    value={props.cryptoAmount}
                     // onChange={(e) => handleValueChanged(e, e.target.value)}
                     className="border-none bg-transparent hover:border-none focus:border-none"
                   />
@@ -98,7 +93,7 @@ export default function StartSelling({...props}:PropsWithRef<Props>) {
               <div className="col-span-2 flex">
                 <div className="w-100 m-auto grow ">
                   <SelectCryptoModal
-                    items={[props.Crypto]}
+                    items={[props.crypto]}
                   />
                 </div>
               </div>
@@ -112,7 +107,7 @@ export default function StartSelling({...props}:PropsWithRef<Props>) {
                   <Input
                     readOnly={true}
                     id="fiatAmount"
-                    value={props.FiatAmount}
+                    value={props.fiatAmount}
                     className="border-none bg-transparent hover:border-none focus:border-none"
                   />
                 </div>
@@ -120,7 +115,7 @@ export default function StartSelling({...props}:PropsWithRef<Props>) {
               <div className="col-span-2 flex">
                 <div className="w-100 m-auto grow ">
                 <SelectFiatModal
-                    items={[props.FiatCurrency]}
+                    items={[props.fiatCurrency]}
                   />
                 </div>
               </div>
@@ -138,8 +133,8 @@ export default function StartSelling({...props}:PropsWithRef<Props>) {
               </Button>
             </div>
             <div className="flex justify-between items-center">
-              <div className="text-lg font-bold">{Number(props.CryptoAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})} {props.Crypto.symbol.toUpperCase()} @ {currencySymbol}{quote.conversionRate}</div>
-              <div>{props.Crypto.symbol} {Number(quote.fiatAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}</div>
+              <div className="text-lg font-bold">{Number(props.cryptoAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})} {props.crypto.symbol.toUpperCase()} @ {currencySymbol}{quote.conversionRate}</div>
+              <div>{props.crypto.symbol} {Number(quote.fiatAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}</div>
             </div>
             <hr className="h-1 my-1 border-gray-500" />
             {chevron == faChevronUp && (
@@ -157,7 +152,7 @@ export default function StartSelling({...props}:PropsWithRef<Props>) {
               </div>
             )}
           </div>
-          <OpenOTPModal onOtpVerified={() => handleNext()}/>
+          <OpenOTPModal onOtpVerified={(email) => handleNext(email)}/>
         </>
       }
     </>

@@ -16,7 +16,7 @@ export default function PayGlideConnectedRecipient({...props}:PropsWithRef<Props
 
   return (
     <>  
-     
+     PayGlideConnectedRecipient
     </>
   )
 }

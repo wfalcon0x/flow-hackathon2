@@ -34,7 +34,7 @@
   --tw-ring-color: none;
 }
 
-.gradient-border-focus:focus{
+.gradient-border-focus:focus, .gradient-border-focus:focus-visible{
     padding: 0.5rem !important;
     border: double 3px transparent !important;
     // border-radius: 6px;

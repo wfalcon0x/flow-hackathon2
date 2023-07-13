@@ -5,12 +5,9 @@ import { UserToken } from "../hooks/useUserTokenList";
 export enum NavigatePage {
   Landing = 1,
   StartSelling = 2,
-  PayGlide = 3,
-  PayGlideEmail = 4,
-  PayGlideOTP = 5,
-  PayGlideConnected = 6,
-  PayGlideAddRecipient = 7,
-  PayGlideConnectedRecipient = 8
+  PayGlideConnectedRecipient = 3,
+  PayGlideAddRecipientCard = 4,
+  PayGlideAddRecipientInfo = 5,
 }
 
 export interface AppBase {
@@ -19,6 +16,7 @@ export interface AppBase {
   currentCryptoAmount: number;
   currentFiatCurrency: CurrencyListItem;
   currentFiatAmount: number;
+  recipientEmail: string;
 }
 
 export interface FeeBase {
@@ -59,7 +57,7 @@ export interface IOnCryptoInfoSelected {
 }
 
 export interface IOnSetNavigatePage {
-  (page: NavigatePage): void;
+  (page: NavigatePage, addData?: AppBase | any): void;
 }
 
 export interface RecipientInfo {

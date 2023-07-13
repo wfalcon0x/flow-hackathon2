@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 
 const LoginHeroImage: FunctionComponent = () => {
   return (
-    <div className="absolute top-[0px] left-[0px] rounded-t-none rounded-2xl [background:linear-gradient(180deg,_#0a0032,_#131e5d_61.12%,_#74447e)] w-full h-[285px] overflow-hidden text-center text-base text-white font-outfit">
+    <div className="absolute top-[0px] left-[0px] rounded-t-none rounded-2xl [background:linear-gradient(180deg,_#0a0032,_#131e5d_61.12%,_#74447e)] w-full h-[285px] overflow-hidden text-center text-base text-white font-outfit rounded-t-xl">
       <img
         className="absolute h-[38.24%] w-[54.09%] top-[73.68%] right-[-4.09%] bottom-[-11.93%] left-[50%] max-w-full overflow-hidden max-h-full"
         alt=""

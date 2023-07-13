@@ -1,15 +1,17 @@
-import { FunctionComponent } from "react";
+import { Component, ComponentProps, ComponentRef, ForwardedRef, FunctionComponent, Ref, useRef } from "react";
 
-import { Input } from "antd";
+import { Input, InputRef } from "antd";
 
-const EmailInput: FunctionComponent = () => {
+export default function EmailInput({inputRef}) {
+  const input = useRef();
   return (
     <>
       <div className="absolute top-[357px] left-[20px]">
         Enter email address
       </div>
       <Input
-        className="rounded-full bg-gray-100 gradient-border mb-3 top-[384px]"
+        ref={inputRef}
+        className="rounded-full gradient-border-hover gradient-border-focus focus:border-none bg-gray-100 border-gray-200 mb-3 top-[384px]"
         type="email"
         placeholder="john.doe@email.com"
         required
@@ -18,5 +20,3 @@ const EmailInput: FunctionComponent = () => {
     </>
   );
 };
-
-export default EmailInput;
