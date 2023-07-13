@@ -32,7 +32,6 @@ export default function SelectCryptoModal({children, readonly = false, ...props}
 
 
   useEffect(() => {
-    console.log(userTokenList);
     setDisplayingList(userTokenList);
     if(props.onCryptoSelected){
       props.onCryptoSelected(null, selectedCrypto);

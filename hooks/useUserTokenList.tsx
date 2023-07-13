@@ -31,7 +31,6 @@ export default function useUserTokenList(): { userTokenList: UserToken[] | null 
       }
     })
     setUserTokenList(result)
-    console.log(result);
   }, [addr, loggedIn, tokenList, tokenBalance])
 
   return { userTokenList }

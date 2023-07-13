@@ -13,7 +13,7 @@ const LoginHeroImage: FunctionComponent = () => {
         alt=""
         src="/vector.svg"
       />
-      <div className="absolute top-[139px] left-[calc(50%_-_126px)] font-semibold inline-block w-[253px]">
+      <div className="absolute top-[139px] left-[calc(50%_-_126px)] font-semibold inline-block w-[253px] text-[16px]">
         <p className="m-0">{`Login to PayGlide for the `}</p>
         <p className="m-0">best offramp experience onFLOW</p>
       </div>

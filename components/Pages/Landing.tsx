@@ -127,6 +127,7 @@ export default function Landing({...props}:PropsWithRef<Props>) {
   };
 
   const onOtpVerifiedHandler = (val) => {
+    console.log('onOtpVerifiedHandler ' + val);
     if(props && props.onSetNavigatePage){
       props.onSetNavigatePage(NavigatePage.Landing, {
         ...props.appData,
@@ -265,7 +266,7 @@ export default function Landing({...props}:PropsWithRef<Props>) {
         <FontAwesomeIcon className="text-[#eb98fd]" icon={faClock} />
         <span className="gradient-text">
           {" "}
-          Quote refresh in {counter} secs
+          Quote refreshes in {counter} secs
         </span>
       </div>
       <div className="bg-gray-100 p-3 align mx-3 my-3 align-middle rounded-xl text-xs text-gray-600">
