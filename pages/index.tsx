@@ -29,9 +29,7 @@ const Trasfer: FunctionComponent = () => {
   return (
     <MainLayout>
       {navigatePage == NavigatePage.Landing && (
-        <Landing
-          onSetNavigatePage={onSetNavigatePageHandler}
-        ></Landing>
+        <Landing onSetNavigatePage={onSetNavigatePageHandler}></Landing>
       )}
       {navigatePage == NavigatePage.StartSelling && (
         <StartSelling
@@ -43,15 +41,23 @@ const Trasfer: FunctionComponent = () => {
         ></StartSelling>
       )}
       {navigatePage == NavigatePage.PayGlideConnectedRecipient && (
-        <PayGlideConnectedRecipient appData={appBase}></PayGlideConnectedRecipient>
+        <PayGlideConnectedRecipient
+          appData={appBase}
+          onSetNavigatePage={onSetNavigatePageHandler}
+        ></PayGlideConnectedRecipient>
       )}
       {navigatePage == NavigatePage.PayGlideAddRecipientCard && (
-        <PayGlideAddRecipientCard></PayGlideAddRecipientCard>
+        <PayGlideAddRecipientCard
+          appData={appBase}
+          onSetNavigatePage={onSetNavigatePageHandler}
+        ></PayGlideAddRecipientCard>
       )}
       {navigatePage == NavigatePage.PayGlideAddRecipientInfo && (
-        <PayGlideAddRecipientInfo></PayGlideAddRecipientInfo>
+        <PayGlideAddRecipientInfo
+          appData={appBase}
+          onSetNavigatePage={onSetNavigatePageHandler}
+        ></PayGlideAddRecipientInfo>
       )}
-      
     </MainLayout>
   );
 };

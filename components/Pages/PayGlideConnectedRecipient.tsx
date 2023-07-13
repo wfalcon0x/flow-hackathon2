@@ -58,6 +58,18 @@ export default function PayGlideConnectedRecipient({...props}:PropsWithRef<Props
     }
   };
 
+  const handleAddRecipientInfo = () => {
+    if(user.loggedIn){
+      if(props && props.onSetNavigatePage){
+        props.onSetNavigatePage(NavigatePage.PayGlideAddRecipientCard, props.appData);
+      }
+    }
+    else{
+      fcl.logIn();
+    }
+  }
+
+
   return (
     <>  
       {quote &&
@@ -151,6 +163,16 @@ export default function PayGlideConnectedRecipient({...props}:PropsWithRef<Props
                 </div>
               </div>
             )}
+          </div>
+          <div className="mx-3">
+          <Button
+              block
+              type="primary"
+              className="font-bold rounded-full uppercase"
+              onClick={() => handleAddRecipientInfo()}
+            >
+              Add Recipient Details
+            </Button>
           </div>
         </>
       }
