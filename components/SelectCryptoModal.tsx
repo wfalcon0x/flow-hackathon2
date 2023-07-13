@@ -55,7 +55,7 @@ export default function SelectCryptoModal({children, readonly = false, ...props}
 
   const handleSearch = (e, value) => {
     if(value){
-      setDisplayingList(props.items.filter(i => i.id.includes(value)));
+      setDisplayingList(props.items.filter(i => i.id.includes(value) || i.symbol.includes(value)));
     }
     else{
       setDisplayingList(props.items);
