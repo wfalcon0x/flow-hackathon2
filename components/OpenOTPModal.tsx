@@ -42,7 +42,6 @@ export default function OpenOTPModal({...props}:PropsWithRef<Props>) {
         const element = document.getElementById("main-app-container")
         element.append(modal.current)
       }
-      emailInput.current.input.value = randEmail();
     }
   }, [showModal])
 

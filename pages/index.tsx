@@ -43,7 +43,7 @@ const Trasfer: FunctionComponent = () => {
         ></StartSelling>
       )}
       {navigatePage == NavigatePage.PayGlideConnectedRecipient && (
-        <PayGlideConnectedRecipient></PayGlideConnectedRecipient>
+        <PayGlideConnectedRecipient appData={appBase}></PayGlideConnectedRecipient>
       )}
       {navigatePage == NavigatePage.PayGlideAddRecipientCard && (
         <PayGlideAddRecipientCard></PayGlideAddRecipientCard>
