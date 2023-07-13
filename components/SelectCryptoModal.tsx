@@ -2,7 +2,7 @@ import { Button, Input, Modal } from 'antd'
 import React, { PropsWithChildren, useEffect, useReducer, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faCross, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { UserToken } from '../hooks/useUserTokenList'
+import useUserTokenList, { UserToken } from '../hooks/useUserTokenList'
 
 export interface OnCryptoSelected{(
   e: React.MouseEventHandler<HTMLDivElement>,
@@ -10,30 +10,33 @@ export interface OnCryptoSelected{(
 }
 
 type data = {
-  items: UserToken[]
   onCryptoSelected?: OnCryptoSelected
+  default?: UserToken;
   readonly?: boolean;
 }
 
 export default function SelectCryptoModal({children, readonly = false, ...props} : PropsWithChildren<data>) {
   const [showModal, setShowModal] = useState(false);
-  const [selectedCrypto, setSelectedCrypto] = useState<UserToken>({
-    id: "A.7e60df042a9c0868.FlowToken",
-    logo: "https://cdn.jsdelivr.net/gh/FlowFans/flow-token-list@main/token-registry/A.1654653399040a61.FlowToken/logo.svg",
-    symbol: "FLOW",
-    balance: ""
-  });
+  const {userTokenList} = useUserTokenList();
+  const [selectedCrypto, setSelectedCrypto] = useState<UserToken>();
   const [displayingList, setDisplayingList] = useState<UserToken[]>();
   const modal = useRef<HTMLDivElement>();
   const selectModal = useRef<HTMLDivElement>();
   
+  useEffect(() => {
+    if(props?.default && props?.default != selectedCrypto){
+      setSelectedCrypto(props?.default);
+    }
+  }, [props?.default]);
+  
+
 
   useEffect(() => {
-    setDisplayingList(props.items);
+    setDisplayingList(userTokenList);
     if(props.onCryptoSelected){
       props.onCryptoSelected(null, selectedCrypto);
     }
-  }, [props.items]);
+  }, [userTokenList]);
   
   const showModalHandler = function(e){
     if(!readonly){
@@ -55,10 +58,10 @@ export default function SelectCryptoModal({children, readonly = false, ...props}
 
   const handleSearch = (e, value) => {
     if(value){
-      setDisplayingList(props.items.filter(i => i.id.includes(value) || i.symbol.includes(value)));
+      setDisplayingList(userTokenList.filter(i => i.id.includes(value) || i.symbol.includes(value)));
     }
     else{
-      setDisplayingList(props.items);
+      setDisplayingList(userTokenList);
     }
   };
 

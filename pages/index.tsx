@@ -7,11 +7,11 @@ import StartSelling from "../components/Pages/StartSelling";
 import PayGlideAddRecipientCard from "../components/Pages/PayGlideAddRecipientCard";
 import PayGlideAddRecipientInfo from "../components/Pages/PayGlideAddRecipientInfo";
 import PayGlideConnectedRecipient from "../components/Pages/PayGlideConnectedRecipient";
+import useQuote from "../hooks/useQuote";
 
 const Trasfer: FunctionComponent = () => {
   const [navigatePage, setNavigatePage] = useState<NavigatePage>(NavigatePage.Landing);
   const [appBase, setAppBase] = useState<AppBase>();
-
   const onSetNavigatePageHandler = function (page, appBaseData) {
     setNavigatePage(page);
     setAppBase({
@@ -29,16 +29,10 @@ const Trasfer: FunctionComponent = () => {
   return (
     <MainLayout>
       {navigatePage == NavigatePage.Landing && (
-        <Landing onSetNavigatePage={onSetNavigatePageHandler}></Landing>
-      )}
-      {navigatePage == NavigatePage.StartSelling && (
-        <StartSelling
-          fiatAmount={appBase.currentFiatAmount}
-          cryptoAmount={appBase.currentCryptoAmount}
-          crypto={appBase.currentCrypto}
-          fiatCurrency={appBase.currentFiatCurrency}
+        <Landing 
+          appData={appBase}
           onSetNavigatePage={onSetNavigatePageHandler}
-        ></StartSelling>
+          ></Landing>
       )}
       {navigatePage == NavigatePage.PayGlideConnectedRecipient && (
         <PayGlideConnectedRecipient

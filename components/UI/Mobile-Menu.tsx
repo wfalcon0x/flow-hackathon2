@@ -23,7 +23,6 @@ export default function MobileMenu() {
     if (typeof document !== 'undefined') {
       const mainElement = document.getElementById("main-app-container");
       setHeight(mainElement.clientHeight);
-      console.log(mainElement.clientHeight);
     }
   }, [mobileNavOpen]);
 
@@ -72,7 +71,7 @@ export default function MobileMenu() {
         onClick={() => setMobileNavOpen(!mobileNavOpen)}
       >
         <span className="sr-only">Menu</span>
-        <FontAwesomeIcon className="text-white text-lg" icon={faBars} />
+        <FontAwesomeIcon className="text-white" icon={faBars} />
       </button>
 
       {/*Mobile navigation */}
@@ -81,7 +80,7 @@ export default function MobileMenu() {
           show={mobileNavOpen}
           as="nav"
           id="mobile-nav"
-          className={`absolute top-0 pb-16 z-20 left-0 block w-full overflow-auto bg-white`}
+          className={`absolute top-0 pb-16 z-20 left-0 block w-full overflow-auto bg-white rounded-2xl`}
           style={{height: height}}
           enter="transition ease-out duration-200 transform"
           enterFrom="opacity-0 -translate-y-2"
@@ -90,7 +89,7 @@ export default function MobileMenu() {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Button type="ghost" className='absolute top-1 right-3' onClick={handleClose}><FontAwesomeIcon icon={faXmark}/></Button>
+          <Button type="ghost" className='absolute top-1 right-3' onClick={handleClose}><FontAwesomeIcon size="2x" icon={faXmark}/></Button>
           <ul className="mt-9 px-5 py-2">
             {/* <li>
               <Link href="/signin" className="flex font-medium w-full text-gray-600 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>Sign in</Link>

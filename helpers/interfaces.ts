@@ -17,6 +17,8 @@ export interface AppBase {
   currentFiatCurrency: CurrencyListItem;
   currentFiatAmount: number;
   recipientEmail: string;
+  recipientCard: string;
+  recipientName: string;
 }
 
 export interface FeeBase {

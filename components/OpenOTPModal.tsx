@@ -31,9 +31,16 @@ export default function OpenOTPModal({...props}:PropsWithRef<Props>) {
   }
 
   const handleOtpVerified = () => {
-    selectModal.current.append(modal.current)
-    setShowModal(false);
-    props.onOtpVerified(emailInput.current.input.value)
+    console.log("onOtpVerified1");
+    if(emailInput.current.input.value){
+      selectModal.current.append(modal.current)
+      console.log("onOtpVerified2"+ emailInput.current.input.value);
+      props.onOtpVerified(emailInput.current.input.value)
+      setShowModal(false);
+    }
+    else{
+      emailInput.current.input.focus();
+    }
   }
 
   useEffect(() => {
@@ -47,14 +54,25 @@ export default function OpenOTPModal({...props}:PropsWithRef<Props>) {
 
   return (
     <div ref={selectModal}>
-      <div className="mx-3">
+      <div className="sticky bottom-0 mx-3">
         <Button
           block
           type="primary"
-          className="font-bold rounded-full uppercase"
+          className="font-bold rounded-full uppercase h-[48px] flex gap-2 justify-center items-center"
           onClick={e => showModalHandler(e)}
         >
-          Next <FontAwesomeIcon className="mx-3" icon={faArrowRight}/>
+          Next 
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="12"
+            fill="none"
+          >
+            <path
+              fill="#fff"
+              d="M23.959 5.992a.919.919 0 0 0-.27-.65L19.126.78a.925.925 0 0 0-1.3 0 .925.925 0 0 0 0 1.3l3.005 3.005H.963a.927.927 0 0 0-.92.92c0 .502.417.92.92.92h19.856l-2.993 2.992a.925.925 0 0 0 0 1.3.91.91 0 0 0 .65.27.91.91 0 0 0 .65-.27l4.55-4.55a.96.96 0 0 0 .209-.319c0-.012 0-.025.012-.037a.98.98 0 0 0 .062-.319Z"
+            />
+          </svg>
         </Button>
       </div>
       {showModal &&

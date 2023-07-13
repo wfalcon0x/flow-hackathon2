@@ -105,7 +105,6 @@ export default function PayGlideConnectedRecipient({...props}:PropsWithRef<Props
               <div className="col-span-2 flex">
                 <div className="w-100 m-auto grow ">
                   <SelectCryptoModal
-                    items={[props.appData.currentCrypto]}
                   />
                 </div>
               </div>

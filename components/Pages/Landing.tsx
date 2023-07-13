@@ -16,15 +16,16 @@ import getSymbolFromCurrency from 'currency-symbol-map'
 import useCurrentUser from "../../hooks/useCurrentUser";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { AppBase, IOnCryptoInfoSelected, IOnSetNavigatePage, NavigatePage, QuoteData } from "../../helpers/interfaces";
+import OpenOTPModal from "../OpenOTPModal";
 
 type Props = {
+  appData: AppBase,
   onSetNavigatePage?: IOnSetNavigatePage
 }
 
 export default function Landing({...props}:PropsWithRef<Props>) {
   const refreshRate = 20;
-  
-  const [user, setUser] = useState({loggedIn: null});
+  const [user, setUser] = useState({loggedIn: null, addr: null});
   const cryptoInput = useRef<InputRef>();
   const [selectedCrypto, setSelectedCrypto] = useState<UserToken>();
   const [selectedFiat, setSelectedFiat] = useState<CurrencyListItem>();
@@ -35,12 +36,12 @@ export default function Landing({...props}:PropsWithRef<Props>) {
   const [counter, setCounter] = useState(refreshRate);
   const counterRef = useRef<number>();
   const [chevron, setChevron] = useState(faChevronUp);
-  const {userTokenList} = useUserTokenList();
+
   const {currencyList} = useCurrencyList();
 
   const callAPI = async () => {
     try {
-      if(selectedFiat && selectedCrypto){
+      if(selectedFiat && selectedCrypto && cryptoAmount){
         const res = await fetch(`/api/offramp/quote?toFiat=${selectedFiat.id.toUpperCase()}&fromCrypto=${selectedCrypto.symbol}&cryptoAmount=${cryptoAmount}`);
         const data = await res.json();
         setQuote({...data});
@@ -52,6 +53,10 @@ export default function Landing({...props}:PropsWithRef<Props>) {
   };
 
   useEffect(() => { 
+    if(props.appData?.currentCryptoAmount){
+      setCryptoAmount(props.appData?.currentCryptoAmount);
+    }
+
     //Check Authentication
     fcl.currentUser.subscribe(setUser);
     //Start Timer
@@ -60,19 +65,40 @@ export default function Landing({...props}:PropsWithRef<Props>) {
   }, []);
 
   useEffect(() => { 
-    console.log(user);
-  }, [user]);
+    if(!selectedCrypto){
+      if(props.appData?.currentCrypto){
+        setSelectedCrypto(props.appData?.currentCrypto);
+      }
+      else{
+          setSelectedCrypto({
+            id: "A.7e60df042a9c0868.FlowToken",
+            logo: "https://cdn.jsdelivr.net/gh/FlowFans/flow-token-list@main/token-registry/A.1654653399040a61.FlowToken/logo.svg",
+            symbol: "FLOW",
+            balance: ""
+          });
+      }
+    }
+  }, [props.appData?.currentCrypto]);
 
-  useEffect(()=> {counterRef.current = counter}, [counter]);
+  useEffect(()=> {
+    counterRef.current = counter;
+    
+    if(counterRef.current <= 0){
+      console.log([selectedFiat, selectedCrypto, cryptoAmount]);
+      callAPI();
+    }
+  }, [counter]);
 
   useEffect(() => {
     callAPI();
-  }, [cryptoAmount, selectedFiat, selectedCrypto]);
+  }, [cryptoAmount]);
+
+  useEffect(() => {
+    callAPI();
+  }, [selectedCrypto]);
 
   const decreaseNum = () => {
-    //console.log(num);
     if(counterRef.current <= 0){
-      callAPI();
       setCounter((prev) => refreshRate);
     }
     else{
@@ -88,17 +114,50 @@ export default function Landing({...props}:PropsWithRef<Props>) {
     }
   };
 
-  const handleValueChanged = function (
+  const handleCryptoAmountValueChanged = function (
     e: ChangeEvent<HTMLInputElement>,
-    value
   ) {
     const re = /^[0-9\b]+$/;
     if (e.target.value === "" || re.test(e.target.value)) {
       if (e.target.id == "cryptoAmount") {
-        setCryptoAmount(value);
+        console.log(Number(e.target.value));
+        setCryptoAmount((prev) => Number(e.target.value));
       }
     }
   };
+
+  const onOtpVerifiedHandler = (val) => {
+    if(props && props.onSetNavigatePage){
+      props.onSetNavigatePage(NavigatePage.Landing, {
+        ...props.appData,
+        user: user,
+        currentCrypto: selectedCrypto,
+        currentCryptoAmount: cryptoAmount,
+        currentFiatCurrency: selectedFiat,
+        currentFiatAmount: fiatAmount,
+        recipientEmail: val
+      });
+    }
+  }
+
+  const handleAddRecipientCard = () => {
+    if(props && props.onSetNavigatePage){
+      props.onSetNavigatePage(NavigatePage.PayGlideAddRecipientCard, {
+        ...props.appData,
+        user: user,
+        currentCrypto: selectedCrypto,
+        currentCryptoAmount: cryptoAmount,
+        currentFiatCurrency: selectedFiat,
+        currentFiatAmount: fiatAmount,
+      });
+    }
+  }
+
+  const handleApprove = ()=> {
+    if(props && props.onSetNavigatePage){
+      props.onSetNavigatePage(NavigatePage.Landing);
+    }
+  }
 
   const onCryptoSelected = function (e, value) {
     setSelectedCrypto(value);
@@ -106,7 +165,6 @@ export default function Landing({...props}:PropsWithRef<Props>) {
 
   const onFiatSelected = function (e, value) {
     setSelectedFiat(value);
-    console.log(value);
     if(value){
       setCurrencySymbol(getSymbolFromCurrency(value.id.toUpperCase()));
     }
@@ -121,29 +179,36 @@ export default function Landing({...props}:PropsWithRef<Props>) {
     }
   };
 
-  const handleSellNow = () => {
-    if(user.loggedIn){
-      if(cryptoAmount > 0){
-        props.onSetNavigatePage(NavigatePage.StartSelling, {
-          currentCrypto: selectedCrypto,
-          currentCryptoAmount: cryptoAmount,
-          currentFiatCurrency: selectedFiat,
-          currentFiatAmount: fiatAmount,
-        });
-      }
-      else{
-        cryptoInput.current.focus();
-        cryptoInput.current.select();
-      }
-    }
-    else{
-      fcl.logIn();
-    }
-  }
-
   return (
     <>
-      <div className="bg-gray-100 px-2 pb-2 align mx-3 mt-8 mb-3 align-middle rounded-xl">
+      { (user.addr && quote) && 
+      <>
+        <div className="w-100 grow m-3">
+          <label className="text-xs text-gray-600">Connected Wallet to {quote.cryptoCurrency}</label>
+          <div className="rounded-full w-full h-[48px] mx-auto bg-gradient-to-r p-[3px] from-[#eb98fd] to-[#6ab7ff]">
+            <div className="flex font-[500] justify-normal items-center h-full bg-white rounded-full px-4 text-[14px] font-montreal">
+              <div>
+                {user ? user.addr : ""}
+              </div>
+            </div>
+          </div>
+        </div>
+        { props.appData?.recipientName &&
+          <div className="w-100 grow m-3">
+          <label className="text-xs text-gray-600">Sending to {props.appData?.recipientName}</label>
+          <div className="rounded-full w-full h-[48px] mx-auto bg-gradient-to-r p-[3px] from-[#eb98fd] to-[#6ab7ff]">
+            <div className="flex font-[500] justify-normal items-center h-full bg-white rounded-full px-4 text-[14px] font-montreal">
+              <div>
+                {user ? user.addr : ""}
+              </div>
+            </div>
+          </div>
+        </div>
+        }
+      </>
+      }
+      <div className={"bg-gray-100 px-2 pb-2 align mx-3 mb-3 align-middle rounded-xl " + (!user.addr ? "mt-8" : "")}>
+      {/* <div className="bg-gray-100 px-2 pb-2 align mx-3 mt-8 mb-3 align-middle rounded-xl"> */}
         <div className="grid grid-cols-12 gap-4">
           <div className="col-start-1 col-span-7 flex">
             <div className="w-100 m-auto grow">
@@ -153,7 +218,7 @@ export default function Landing({...props}:PropsWithRef<Props>) {
                 id="cryptoAmount"
                 value={cryptoAmount}
                 bordered={false}
-                onChange={(e) => handleValueChanged(e, e.target.value)}
+                onChange={(e) => handleCryptoAmountValueChanged(e)}
                 style={{padding: 0}}
                 className="bg-transparent border-none focus:border-none"
               />
@@ -162,7 +227,7 @@ export default function Landing({...props}:PropsWithRef<Props>) {
           <div className="col-span-5 flex">
             <div className="w-100 grow mb-2 mt-auto">
               <SelectCryptoModal
-                items={userTokenList}
+                default={selectedCrypto}
                 onCryptoSelected={onCryptoSelected}
               />
             </div>
@@ -185,7 +250,7 @@ export default function Landing({...props}:PropsWithRef<Props>) {
           </div>
           <div className="col-span-5 flex">
           <div className="w-100 grow mb-2 mt-auto">
-            <SelectFiatModal
+              <SelectFiatModal
                 items={currencyList}
                 onFiatSelected={onFiatSelected}
               />
@@ -214,7 +279,7 @@ export default function Landing({...props}:PropsWithRef<Props>) {
         { quote &&
           <div className="flex justify-between items-center text-base font-montreal">
             <div className="text-black text-base">
-              {Number(cryptoAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})} {selectedCrypto.symbol.toUpperCase()} @ {currencySymbol}{Number(quote.conversionRate).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}
+              {Number(cryptoAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})} {selectedCrypto?.symbol.toUpperCase()} @ {currencySymbol}{Number(quote.conversionRate).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}
             </div>
             <div className="text-sm">
               {currencySymbol} {Number(fiatAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}
@@ -227,7 +292,7 @@ export default function Landing({...props}:PropsWithRef<Props>) {
             {getBreakdowns && getBreakdowns().map((item) => 
               <div key={item.description.replace(" ", "_")} className="flex justify-between pb-2">
                 <span>{item.description}</span>
-                <span>{currencySymbol} {item.amount.toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}</span>
+                <span>{currencySymbol} {Number(item.amount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}</span>
               </div>
             )}
             <div className="flex justify-between">
@@ -238,14 +303,43 @@ export default function Landing({...props}:PropsWithRef<Props>) {
         )}
       </div>
       <div className="sticky bottom-0 mx-3">
-        <Button
-          block
-          type="primary"
-          className="font-bold rounded-full uppercase h-[48px]"
-          onClick={() => handleSellNow()}
-        >
-          Sell Now
-        </Button>
+        { props.appData?.recipientEmail == null &&
+          <>
+            { user.loggedIn == null &&
+              <Button
+                block
+                type="primary"
+                className="font-bold rounded-full uppercase h-[48px]"
+                onClick={() =>  fcl.logIn()}
+              >
+                Sell Now
+              </Button>
+            }
+            { user.loggedIn &&
+              <OpenOTPModal onOtpVerified={(email) => onOtpVerifiedHandler(email)}/>
+            }
+          </>
+        }
+        { (props.appData?.recipientEmail && !props.appData?.recipientName) &&
+          <Button
+            block
+            type="primary"
+            className="font-bold rounded-full uppercase h-[48px]"
+            onClick={() => handleAddRecipientCard()}
+          >
+            Add Recipient Details
+          </Button>
+        }
+        { (props.appData?.recipientEmail && props.appData?.recipientName) &&
+            <Button
+            block
+            type="primary"
+            className="font-bold rounded-full uppercase h-[48px]"
+            onClick={() => handleApprove()}
+          >
+            Approve
+          </Button>
+        }
       </div>
     </>
   )

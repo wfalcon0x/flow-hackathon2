@@ -15,10 +15,20 @@ export default function PayGlideAddRecipientCard({...props}:PropsWithRef<Props>)
   useEffect(() => { 
     //Check Authentication
     fcl.currentUser.subscribe(setUser);
+  }, []);
+
+  useEffect(() => { 
+    //Check Authentication
+    fcl.currentUser.subscribe(setUser);
 
     //Create Random Card Data
-    setCreditCardVal((Math.floor(1000000000000000 + Math.random() * 9000000000000000)).toString());
-  }, []);
+    if(props.appData?.recipientCard){
+      setCreditCardVal(props.appData?.recipientCard);
+    }
+    else{
+      setCreditCardVal((Math.floor(1000000000000000 + Math.random() * 9000000000000000)).toString());
+    }
+  }, [props.appData?.recipientCard]);
 
   const creditCardFormat = function (value) {
     const v = value
@@ -48,37 +58,41 @@ export default function PayGlideAddRecipientCard({...props}:PropsWithRef<Props>)
   };
 
   const handlePrev = () => {
-    props.onSetNavigatePage(NavigatePage.PayGlideConnectedRecipient, props.appData);
+    props.onSetNavigatePage(NavigatePage.Landing, props.appData);
   }
 
   const handleNext = () => {
-    props.onSetNavigatePage(NavigatePage.PayGlideAddRecipientInfo, props.appData);
+    props.onSetNavigatePage(NavigatePage.PayGlideAddRecipientInfo, {
+      ...props.appData,
+      recipientCard: creditCardVal
+    });
   }
 
 
   return (
     <>
       <div className="w-100 grow mx-3 mb-3 mt-3">
-        <div className="font-bold text-xl">Enter recipients card info</div>
-        <div className="text-primary text-sm mb-6">
+        <div className="font-bold text-[23px]">Enter recipients card info</div>
+        <div className="text-primary text-[14px] mb-6 text-gray-600">
           you can send to VISA debit cards
         </div>
-        <div className="text-primary text-sm">Recipient debit card number</div>
+        <div className="text-primary text-xs text-gray-600 mb-2">Recipient debit card number</div>
         <Input
-          className="border-solid rounded-full gradient-border text-center"
-          placeholder="xxxx - xxxx - xxxx - xxxx"
+          className="border-solid bg-gray-500 rounded-full gradient-border text-center h-[48px] font-[500]"
+          style={{fontSize: "14px", wordSpacing: "6px"}}
+          placeholder="xxxx xxxx xxxx xxxx"
           value={creditCardFormat(creditCardVal)}
           onChange={(e) => handleValueChanged(e)}
         />
       </div>
-      <div className="absolute bottom-3 flex justify-between w-full px-3">
+      <div className="absolute bottom-4 px-3 flex justify-between w-full">
         <Button
-          className="text-primary border-none font-bold"
+          className="text-primary border-none font-bold h-[48px] bg-white rounded-full opacity-70"
           onClick={() => handlePrev()}
         >
           Back
         </Button>
-        <Button className="gradient text-white font-bold rounded-full flex gap-2 items-center p-5"
+        <Button className="gradient text-white font-bold rounded-full flex gap-2 items-center h-[48px] hover-white"
           onClick={() => handleNext()}
         >
           Next

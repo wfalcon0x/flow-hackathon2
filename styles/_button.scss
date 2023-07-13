@@ -8,3 +8,7 @@
 .ant-btn.gradient{
   background: linear-gradient(90.19deg,#eb98fd,#6ab7ff);
 }
+
+.ant-btn-default.hover-white:not(:disabled):hover{
+  color: white;
+}
