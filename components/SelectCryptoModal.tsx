@@ -32,6 +32,7 @@ export default function SelectCryptoModal({children, readonly = false, ...props}
 
 
   useEffect(() => {
+    console.log(userTokenList);
     setDisplayingList(userTokenList);
     if(props.onCryptoSelected){
       props.onCryptoSelected(null, selectedCrypto);
@@ -90,7 +91,7 @@ export default function SelectCryptoModal({children, readonly = false, ...props}
         <FontAwesomeIcon size="xs" icon={faChevronDown}/>
       </Button>
       {showModal &&
-        <div key="modal" className={`absolute overflow-auto bg-white top-0 left-0 w-full h-full z-50 p-3 mb-7 rounded-2xl`}
+        <div key="modal" className={`absolute overflow-auto scrollbar-hide bg-white top-0 left-0 w-full h-full z-50 p-3 mb-7 rounded-2xl`}
           ref={modal}
         >
           <div className='mb-3'>
@@ -98,12 +99,55 @@ export default function SelectCryptoModal({children, readonly = false, ...props}
           </div>
           <Button type="ghost" className='absolute top-1 right-3' onClick={handleCancel}><FontAwesomeIcon size='2x' icon={faXmark}/></Button>
           <Input
-            className='mb-1 rounded-full'
+            className='mb-1 h-[48px] rounded-full'
+            style={{fontSize: "14px"}}
             onChange={(e)=> handleSearch(e, e.target.value)}
-            suffix={
-              <FontAwesomeIcon icon={faMagnifyingGlass}></FontAwesomeIcon>
+            prefix={
+              <FontAwesomeIcon icon={faMagnifyingGlass} color='gray'></FontAwesomeIcon>
             }
           />
+          <div className='flex justify-start gap-1 py-1'>
+            <div 
+              onClick={(e) => handleSelect(e, userTokenList.find(i => i.symbol == 'FLOW'))}
+              className='flex items-center gap-1 text-xs rounded-full bg-gray-200 py-1 px-2 hover:cursor-pointer'>
+              <img 
+                className="w-2 h-2 rounded-full"
+                src={userTokenList.find(i => i.symbol == 'FLOW').logo}/>
+              <span>Flow</span>
+            </div>
+            <div 
+              onClick={(e) => handleSelect(e, userTokenList.find(i => i.symbol == 'USDC'))}
+              className='flex items-center gap-1 text-xs rounded-full bg-gray-200 py-1 px-2 hover:cursor-pointer'>
+              <img 
+                className="w-2 h-2 rounded-full"
+                src={userTokenList.find(i => i.symbol == 'USDC').logo}/>
+              <span>USDC</span>
+            </div>
+            <div 
+              onClick={(e) => handleSelect(e, userTokenList.find(i => i.symbol == 'DUST'))}
+              className='flex items-center gap-1 text-xs rounded-full bg-gray-200 py-1 px-2 hover:cursor-pointer'>
+              <img
+                className="w-2 h-2 rounded-full"
+                src={userTokenList.find(i => i.symbol == 'DUST').logo}/>
+              <span>DUST</span>
+            </div>
+            <div 
+              onClick={(e) => handleSelect(e, userTokenList.find(i => i.symbol == 'LOPPY'))}
+              className='flex items-center gap-1 text-xs rounded-full bg-gray-200 py-1 px-2 hover:cursor-pointer'>
+              <img
+                className="w-2 h-2 rounded-full"
+                src={userTokenList.find(i => i.symbol == 'LOPPY').logo}/>
+              <span>LOPPY</span>
+            </div>
+            <div 
+              onClick={(e) => handleSelect(e, userTokenList.find(i => i.symbol == 'stFlow'))}
+              className='flex items-center gap-1 text-xs rounded-full bg-gray-200 py-1 px-2 hover:cursor-pointer'>
+              <img
+                className="w-2 h-2 rounded-full"
+                src={userTokenList.find(i => i.symbol == 'stFlow').logo}/>
+              <span>stFlow</span>
+            </div>
+          </div>
           <ul>
           {displayingList && displayingList.map((item) => 
             <li onClick={(e) => handleSelect(e, item)} key={item.id} className='w-full bg-gray-200 hover:bg-gray-400 px-3 py-2 my-2 rounded-xl text-sm text-default'>

@@ -110,38 +110,29 @@ export default function SelectFiatModal({children, readonly = false, ...props} :
               <FontAwesomeIcon icon={faMagnifyingGlass} color='gray'></FontAwesomeIcon>
             }
           />
-          <div className='flex justify-start gap-3 py-1'>
+          <div className='flex justify-start gap-2 py-1'>
             <div 
-              onClick={(e) => handleSelect(e, {
-                id: "gbp", 
-                logo: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAgCAMAAABjCgsuAAAAyVBMVEUAIH8BIH8CIYAHJoIOLIYPLYYZNYsaNowfO44nQpI3UJo4UJtLYaRhdK9idbBmebJnerJoerN4iLt5ibuQncenstK7w9y8xN29xd3P1ebRDSTe4u7fMh3fNiHgOyfgPCjhQi/hRDHjTjzlW0rlW0vnalvna1vpdWfpdmjpe27qfG/qjYTqj4bqoJnq7PTropvrs7DrtLHrurfrurjr7fTsxcTsxcXu1NXx4ePy8/j06+309fn17e/49PX49Pb7+vv7+/z+/v7///8ZBiYZAAABQklEQVQ4y82U2U4CURBEW3ABRR2VdShkQFTcFUQYQIH6/4/ywbm5KwYeTKzHSarOTU9XC4D+nGkkhsg4jmNSfzmoc/XSAi5fpQ8gGZLVwi+G0jOnNwCuJhQOEg/iGPJl8qMD4GHBhqSc37oQ21BscPEIoDMiy3kp1KghpwHD8YyTHoDrKd9LIiJy5kEMw26FfGsDracV6/vZCzyINhw2+XUPoDvm8iKnx+JAlCF3vuS4C+Duk80jc/BSqBqQSBlqavhkZU8cRQoyIJXhZ/i9CWcn4suEZIaRGn5RQtqJUs77ABJl0MO39iak7EkBbW+It9R/NPz9lJztsH5cEiq8tRpDezX8LobizeULFd6P1+sdpesgZrxRIKcma+LtTocgTrxzNTxIiGrfJSfQi/cvn5W5yam0IOLFB6+3hshm514X/hucN8Af5X8PRgAAAABJRU5ErkJggg=="
-              })}
-              className='flex items-center gap-2 text-xs rounded-full bg-gray-200 px-2 py-1 hover:cursor-pointer'>
+              onClick={(e) => handleSelect(e, props.items?.find(i => i.id == 'gbp'))}
+              className='flex items-center gap-1 text-xs rounded-full bg-gray-200 px-2 py-1 hover:cursor-pointer'>
               <img 
                 className="w-3 h-3 rounded-full"
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAgCAMAAABjCgsuAAAAyVBMVEUAIH8BIH8CIYAHJoIOLIYPLYYZNYsaNowfO44nQpI3UJo4UJtLYaRhdK9idbBmebJnerJoerN4iLt5ibuQncenstK7w9y8xN29xd3P1ebRDSTe4u7fMh3fNiHgOyfgPCjhQi/hRDHjTjzlW0rlW0vnalvna1vpdWfpdmjpe27qfG/qjYTqj4bqoJnq7PTropvrs7DrtLHrurfrurjr7fTsxcTsxcXu1NXx4ePy8/j06+309fn17e/49PX49Pb7+vv7+/z+/v7///8ZBiYZAAABQklEQVQ4y82U2U4CURBEW3ABRR2VdShkQFTcFUQYQIH6/4/ywbm5KwYeTKzHSarOTU9XC4D+nGkkhsg4jmNSfzmoc/XSAi5fpQ8gGZLVwi+G0jOnNwCuJhQOEg/iGPJl8qMD4GHBhqSc37oQ21BscPEIoDMiy3kp1KghpwHD8YyTHoDrKd9LIiJy5kEMw26FfGsDracV6/vZCzyINhw2+XUPoDvm8iKnx+JAlCF3vuS4C+Duk80jc/BSqBqQSBlqavhkZU8cRQoyIJXhZ/i9CWcn4suEZIaRGn5RQtqJUs77ABJl0MO39iak7EkBbW+It9R/NPz9lJztsH5cEiq8tRpDezX8LobizeULFd6P1+sdpesgZrxRIKcma+LtTocgTrxzNTxIiGrfJSfQi/cvn5W5yam0IOLFB6+3hshm514X/hucN8Af5X8PRgAAAABJRU5ErkJggg=="/>
+                src={props.items?.find(i => i.id == 'gbp')?.logo}/>
               <span>GBP</span>
             </div>
             <div 
-              onClick={(e) => handleSelect(e, {
-                id: "eur", 
-                logo: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAgAgMAAAApuhOPAAAACVBMVEUAU6eApFP/9ABWIW2TAAAAQ0lEQVQY02NgoD5gdEDisE1AsEXYJojAOZmMDpkIDhjBlIERMbbAbQLZArcJhYOiDA9AsRTFOSgORfECiueIsoVkAACg9AqhFj835AAAAABJRU5ErkJggg=="
-              })}
+              onClick={(e) => handleSelect(e, props.items?.find(i => i.id == 'eur'))}
               className='flex items-center gap-1 text-xs rounded-full bg-gray-200 px-2 py-1 hover:cursor-pointer'>
               <img 
                 className="w-3 h-3 rounded-full"
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAgAgMAAAApuhOPAAAACVBMVEUAU6eApFP/9ABWIW2TAAAAQ0lEQVQY02NgoD5gdEDisE1AsEXYJojAOZmMDpkIDhjBlIERMbbAbQLZArcJhYOiDA9AsRTFOSgORfECiueIsoVkAACg9AqhFj835AAAAABJRU5ErkJggg=="/>
+                src={props.items?.find(i => i.id == 'eur')?.logo}/>
               <span>EUR</span>
             </div>
             <div 
-              onClick={(e) => handleSelect(e, {
-                id: "usd", 
-                logo: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAgBAMAAACm+uYvAAAAD1BMVEUAJWq0vtO1v9PBASv////7AfyZAAAAOUlEQVQoz2NgQALGSIABt4QSHDK4IAEGBkU4RJMg3Q4kS9CMQlhCqR3DxB8uOABuCWMcALfEiLUDADkOhlU5rxL6AAAAAElFTkSuQmCC"
-              })}
+              onClick={(e) => handleSelect(e, props.items?.find(i => i.id == 'usd'))}
               className='flex items-center gap-1 text-xs rounded-full bg-gray-200 px-2 py-1 hover:cursor-pointer'>
               <img
                 className="w-3 h-3 rounded-full"
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAgBAMAAACm+uYvAAAAD1BMVEUAJWq0vtO1v9PBASv////7AfyZAAAAOUlEQVQoz2NgQALGSIABt4QSHDK4IAEGBkU4RJMg3Q4kS9CMQlhCqR3DxB8uOABuCWMcALfEiLUDADkOhlU5rxL6AAAAAElFTkSuQmCC"/>
+                src={props.items?.find(i => i.id == 'usd')?.logo}/>
               <span>USD</span>
             </div>
           </div>
