@@ -80,7 +80,7 @@ export default function SelectCryptoModal({children, readonly = false, ...props}
           { selectedCrypto &&
             <div className='flex gap-2 items-center'>
             <div><img src={selectedCrypto.logo} className="w-4 h-4" /></div>
-            <div className='uppercase'>{selectedCrypto.symbol}</div>
+            <div className='uppercase max-w-[36px] overflow-hidden'>{selectedCrypto.symbol}</div>
             </div>
           }
         </div>
