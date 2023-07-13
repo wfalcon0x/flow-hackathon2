@@ -107,22 +107,27 @@ export default function SelectCryptoModal({children, readonly = false, ...props}
             }
           />
           <div className='flex justify-start gap-1 py-1'>
-            <div 
-              onClick={(e) => handleSelect(e, userTokenList.find(i => i.symbol == 'FLOW'))}
-              className='flex items-center gap-1 text-xs rounded-full bg-gray-200 py-1 px-2 hover:cursor-pointer'>
-              <img 
-                className="w-2 h-2 rounded-full"
-                src={userTokenList.find(i => i.symbol == 'FLOW').logo}/>
-              <span>Flow</span>
-            </div>
-            <div 
-              onClick={(e) => handleSelect(e, userTokenList.find(i => i.symbol == 'USDC'))}
-              className='flex items-center gap-1 text-xs rounded-full bg-gray-200 py-1 px-2 hover:cursor-pointer'>
-              <img 
-                className="w-2 h-2 rounded-full"
-                src={userTokenList.find(i => i.symbol == 'USDC').logo}/>
-              <span>USDC</span>
-            </div>
+            { userTokenList.find(i => i.symbol == 'FLOW') && 
+              <div 
+                onClick={(e) => handleSelect(e, userTokenList.find(i => i.symbol == 'FLOW'))}
+                className='flex items-center gap-1 text-xs rounded-full bg-gray-200 py-1 px-2 hover:cursor-pointer'>
+                <img 
+                  className="w-2 h-2 rounded-full"
+                  src={userTokenList.find(i => i.symbol == 'FLOW').logo}/>
+                <span>Flow</span>
+              </div>
+            }
+            { userTokenList.find(i => i.symbol == 'USDC') && 
+              <div 
+                onClick={(e) => handleSelect(e, userTokenList.find(i => i.symbol == 'USDC'))}
+                className='flex items-center gap-1 text-xs rounded-full bg-gray-200 py-1 px-2 hover:cursor-pointer'>
+                <img 
+                  className="w-2 h-2 rounded-full"
+                  src={userTokenList.find(i => i.symbol == 'USDC').logo}/>
+                <span>USDC</span>
+              </div>
+            }
+            { userTokenList.find(i => i.symbol == 'DUST') && 
             <div 
               onClick={(e) => handleSelect(e, userTokenList.find(i => i.symbol == 'DUST'))}
               className='flex items-center gap-1 text-xs rounded-full bg-gray-200 py-1 px-2 hover:cursor-pointer'>
@@ -131,6 +136,8 @@ export default function SelectCryptoModal({children, readonly = false, ...props}
                 src={userTokenList.find(i => i.symbol == 'DUST').logo}/>
               <span>DUST</span>
             </div>
+            }
+            { userTokenList.find(i => i.symbol == 'LOPPY') && 
             <div 
               onClick={(e) => handleSelect(e, userTokenList.find(i => i.symbol == 'LOPPY'))}
               className='flex items-center gap-1 text-xs rounded-full bg-gray-200 py-1 px-2 hover:cursor-pointer'>
@@ -139,6 +146,8 @@ export default function SelectCryptoModal({children, readonly = false, ...props}
                 src={userTokenList.find(i => i.symbol == 'LOPPY').logo}/>
               <span>LOPPY</span>
             </div>
+            }
+            { userTokenList.find(i => i.symbol == 'stFlow') && 
             <div 
               onClick={(e) => handleSelect(e, userTokenList.find(i => i.symbol == 'stFlow'))}
               className='flex items-center gap-1 text-xs rounded-full bg-gray-200 py-1 px-2 hover:cursor-pointer'>
@@ -147,6 +156,7 @@ export default function SelectCryptoModal({children, readonly = false, ...props}
                 src={userTokenList.find(i => i.symbol == 'stFlow').logo}/>
               <span>stFlow</span>
             </div>
+            }
           </div>
           <ul>
           {displayingList && displayingList.map((item) => 

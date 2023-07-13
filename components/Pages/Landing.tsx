@@ -209,9 +209,9 @@ export default function Landing({...props}:PropsWithRef<Props>) {
       }
       <div className={"bg-gray-100 px-2 pb-2 align mx-3 mb-3 align-middle rounded-xl " + (!user.addr ? "mt-8" : "")}>
       {/* <div className="bg-gray-100 px-2 pb-2 align mx-3 mt-8 mb-3 align-middle rounded-xl"> */}
-        <div className="grid grid-cols-12 gap-4">
-          <div className="col-start-1 col-span-7 flex">
-            <div className="w-100 m-auto grow">
+        <div className="grid grid-cols-12 gap-1">
+          <div className="col-start-1 col-span-7 grid grid-cols-12">
+            <div className="w-100 m-auto grow col-start-1 col-span-7">
               <label className="text-xs text-gray-600">You pay</label>
               <Input
                 ref={cryptoInput}
@@ -220,12 +220,15 @@ export default function Landing({...props}:PropsWithRef<Props>) {
                 bordered={false}
                 onChange={(e) => handleCryptoAmountValueChanged(e)}
                 style={{padding: 0}}
-                className="bg-transparent border-none focus:border-none"
+                className="bg-transparent border-none focus:border-none overflow-visible"
               />
             </div>
+            { (selectedCrypto?.balance || user.loggedIn) &&
+              <div className="text-xs text-gray-600 align-bottom col-span-5 mt-auto mb-0 text-right overflow-visible">available {selectedCrypto?.balance ? Number(selectedCrypto?.balance).toFixed(2) : "0.00"}</div>
+            }
           </div>
           <div className="col-span-5 flex">
-            <div className="w-100 grow mb-2 mt-auto">
+            <div className="w-100 grow mb-2 mt-auto pl-2">
               <SelectCryptoModal
                 default={selectedCrypto}
                 onCryptoSelected={onCryptoSelected}
