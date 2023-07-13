@@ -5,7 +5,7 @@ import Footer from '../components/UI/Footer'
 import Header from '../components/UI/Header'
 
 export default function MainLayout({ children })  {
-  const defaultClassAttributes = "absolute top-[30px] left-[calc(50%_-_215px)] w-[430px] h-[642px] border-8 bg-gray-400 rounded-3xl z-10";
+  const defaultClassAttributes = "absolute top-[30px] left-[calc(50%_-_215px)] w-[430px] h-[642px] border-8 bg-white rounded-3xl z-10";
   const innerDefaultClassAttributes = "main-app-content bg-white w-full h-full overflow-y-scroll box-border rounded-2xl pt-[80px] pb-9";
   const [size, setSize] = useState([0, 0]);
   const [classAttributes, setClassAttributes] = useState(defaultClassAttributes);
@@ -40,7 +40,7 @@ export default function MainLayout({ children })  {
       <div id="main-app-container" className={classAttributes}>
         <Header />
         <div className={innerClassAttributes}>
-          <section className="relative min-h-full">
+          <section className="relative min-h-full bg-white">
             {children}
           </section>
         </div>

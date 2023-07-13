@@ -75,7 +75,7 @@ export default function PayGlideConnectedRecipient({...props}:PropsWithRef<Props
       {quote &&
         <>
           <div className="w-100 grow mx-3 mb-3">
-            <label className="text-xs text-default">Connected Wallet to {props.appData.currentCrypto.symbol}</label>
+            <label className="text-xs text-gray-600">Connected Wallet to {props.appData.currentCrypto.symbol}</label>
             <div className="rounded-full w-full h-10 mx-auto bg-gradient-to-r p-[3px] from-[#eb98fd] to-[#6ab7ff]">
               <div className="flex justify-normal items-center h-full bg-white rounded-full px-4 text-primary text-sm font-bold">
                 <div>
@@ -88,11 +88,11 @@ export default function PayGlideConnectedRecipient({...props}:PropsWithRef<Props
               className="bg-transparent rounded-full gradient-border"
             /> */}
           </div>
-          <div className="bg-gray-200 opacity-90 p-3 align mx-3 my-6 align-middle rounded-xl">
+          <div className="bg-gray-100 p-3 align mx-3 my-6 align-middle rounded-xl">
             <div className="grid grid-cols-6 gap-4">
               <div className="col-start-1 col-span-4 flex">
                 <div className="w-100 m-auto grow mb-3">
-                  <label className="text-xs text-default">You pay</label>
+                  <label className="text-xs text-gray-600">You pay</label>
                   <Input
                     readOnly={true}
                     id="cryptoAmount"
@@ -111,11 +111,11 @@ export default function PayGlideConnectedRecipient({...props}:PropsWithRef<Props
               </div>
             </div>
           </div>
-          <div className="bg-gray-200 opacity-90 p-3 align mx-3 my-6 align-middle rounded-xl">
+          <div className="bg-gray-100 p-3 align mx-3 my-6 align-middle rounded-xl">
             <div className="grid grid-cols-6 gap-4">
               <div className="col-start-1 col-span-4 flex">
                 <div className="w-100 m-auto grow mb-3">
-                  <label className="text-xs text-default">You get &asymp;</label>
+                  <label className="text-xs text-gray-600">You get &asymp;</label>
                   <Input
                     readOnly={true}
                     id="fiatAmount"
@@ -133,7 +133,7 @@ export default function PayGlideConnectedRecipient({...props}:PropsWithRef<Props
               </div>
             </div>
           </div>
-          <div className="bg-gray-200 opacity-90 p-3 align mx-3 my-6 align-middle rounded-xl text-xs text-default">
+          <div className="bg-gray-100 p-3 align mx-3 my-6 align-middle rounded-xl text-xs text-gray-600">
             <div className="flex justify-between items-center">
               <span className="font-bold">Summary</span>{" "}
               <Button
@@ -145,7 +145,7 @@ export default function PayGlideConnectedRecipient({...props}:PropsWithRef<Props
               </Button>
             </div>
             <div className="flex justify-between items-center">
-              <div className="text-lg font-bold">{Number(props.appData.currentCryptoAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})} {props.appData.currentCrypto.symbol.toUpperCase()} @ {currencySymbol}{quote.conversionRate}</div>
+              <div className="text-lg font-bold">{Number(props.appData.currentCryptoAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})} {props.appData.currentCrypto.symbol.toUpperCase()} @ {currencySymbol}{Number(quote.conversionRate).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}</div>
               <div>{props.appData.currentCrypto.symbol} {Number(quote.fiatAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}</div>
             </div>
             <hr className="h-1 my-1 border-gray-500" />

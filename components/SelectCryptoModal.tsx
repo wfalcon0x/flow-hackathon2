@@ -78,9 +78,9 @@ export default function SelectCryptoModal({children, readonly = false, ...props}
       <Button onClick={e => showModalHandler(e)} className="rounded-xl min-w-full bg-gray-50 flex justify-between items-center"  style={{ background: "white"}}>
         <div>
           { selectedCrypto &&
-            <div className='flex gap-2 items-center'>
+            <div className='flex gap-1 items-center'>
             <div><img src={selectedCrypto.logo} className="w-4 h-4" /></div>
-            <div className='uppercase max-w-[36px] overflow-hidden'>{selectedCrypto.symbol}</div>
+            <div className='max-w-[64px] overflow-hidden'>{selectedCrypto.symbol}</div>
             </div>
           }
         </div>
@@ -107,7 +107,7 @@ export default function SelectCryptoModal({children, readonly = false, ...props}
               <div className='flex justify-between items-center'>
                 <div className='flex justify-items-start gap-2 items-center'><img src={item.logo} className="w-6 h-6" /> <span> {item.symbol}</span></div><div className='p-2 rounded-xl text-right'>{item.balance}</div>
               </div>
-              <div className='text-xs text-default'>{item.id}</div>
+              <div className='text-xs text-gray-600'>{item.id}</div>
             </li>
           )}
           </ul>

@@ -90,7 +90,7 @@ export default function MobileMenu() {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Button type="ghost" className='absolute top-1 right-3' onClick={handleClose}><FontAwesomeIcon size='2x' icon={faXmark}/></Button>
+          <Button type="ghost" className='absolute top-1 right-3' onClick={handleClose}><FontAwesomeIcon icon={faXmark}/></Button>
           <ul className="mt-9 px-5 py-2">
             {/* <li>
               <Link href="/signin" className="flex font-medium w-full text-gray-600 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>Sign in</Link>

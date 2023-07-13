@@ -143,22 +143,24 @@ export default function Landing({...props}:PropsWithRef<Props>) {
 
   return (
     <>
-      <div className="bg-gray-200 opacity-90 p-3 align mx-3 my-6 align-middle rounded-xl">
-        <div className="grid grid-cols-6 gap-4">
-          <div className="col-start-1 col-span-4 flex">
-            <div className="w-100 m-auto grow mb-3">
-              <label className="text-xs text-default">You pay</label>
+      <div className="bg-gray-100 px-2 pb-2 align mx-3 mt-8 mb-3 align-middle rounded-xl">
+        <div className="grid grid-cols-12 gap-4">
+          <div className="col-start-1 col-span-7 flex">
+            <div className="w-100 m-auto grow">
+              <label className="text-xs text-gray-600">You pay</label>
               <Input
                 ref={cryptoInput}
                 id="cryptoAmount"
                 value={cryptoAmount}
+                bordered={false}
                 onChange={(e) => handleValueChanged(e, e.target.value)}
-                className="border-none bg-transparent hover:border-none focus:border-none"
+                style={{padding: 0}}
+                className="bg-transparent border-none focus:border-none"
               />
             </div>
           </div>
-          <div className="col-span-2 flex">
-            <div className="w-100 m-auto grow ">
+          <div className="col-span-5 flex">
+            <div className="w-100 grow mb-2 mt-auto">
               <SelectCryptoModal
                 items={userTokenList}
                 onCryptoSelected={onCryptoSelected}
@@ -167,21 +169,22 @@ export default function Landing({...props}:PropsWithRef<Props>) {
           </div>
         </div>
       </div>
-      <div className="bg-gray-200 opacity-90 p-3 align mx-3 my-6 align-middle rounded-xl">
-        <div className="grid grid-cols-6 gap-4">
-          <div className="col-start-1 col-span-4 flex">
-            <div className="w-100 m-auto grow mb-3">
-              <label className="text-xs text-default">You get &asymp;</label>
+      <div className="bg-gray-100 px-2 pb-2 align mx-3 mb-6 align-middle rounded-xl">
+        <div className="grid grid-cols-12 gap-4">
+          <div className="col-start-1 col-span-7 flex">
+            <div className="w-100 m-auto grow">
+              <label className="text-xs text-gray-600">You get &asymp;</label>
               <Input
                 readOnly={true}
                 id="fiatAmount"
-                value={fiatAmount}
-                className="border-none bg-transparent hover:border-none focus:border-none"
+                value={Number(fiatAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}
+                style={{padding: 0}}
+                className="bg-transparent border-none focus:border-none"
               />
             </div>
           </div>
-          <div className="col-span-2 flex">
-            <div className="w-100 m-auto grow ">
+          <div className="col-span-5 flex">
+          <div className="w-100 grow mb-2 mt-auto">
             <SelectFiatModal
                 items={currencyList}
                 onFiatSelected={onFiatSelected}
@@ -197,9 +200,9 @@ export default function Landing({...props}:PropsWithRef<Props>) {
           Quote refresh in {counter} secs
         </span>
       </div>
-      <div className="bg-gray-200 opacity-90 p-3 align mx-3 my-6 align-middle rounded-xl text-xs text-default">
+      <div className="bg-gray-100 p-3 align mx-3 my-3 align-middle rounded-xl text-xs text-gray-600">
         <div className="flex justify-between items-center">
-          <span className="font-bold">Summary</span>{" "}
+          <span className="font-outfit">Summary</span>{" "}
           <Button
             className="border-none text-sm"
             size="small"
@@ -209,16 +212,20 @@ export default function Landing({...props}:PropsWithRef<Props>) {
           </Button>
         </div>
         { quote &&
-          <div className="flex justify-between items-center">
-            <div className="text-lg font-bold">{Number(cryptoAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})} {selectedCrypto.symbol.toUpperCase()} @ {currencySymbol}{quote.conversionRate}</div>
-            <div>{currencySymbol} {Number(fiatAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}</div>
+          <div className="flex justify-between items-center text-base font-montreal">
+            <div className="text-black text-base">
+              {Number(cryptoAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})} {selectedCrypto.symbol.toUpperCase()} @ {currencySymbol}{Number(quote.conversionRate).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}
+            </div>
+            <div className="text-sm">
+              {currencySymbol} {Number(fiatAmount).toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}
+            </div>
           </div>
         }
         <hr className="h-1 my-1 border-gray-500" />
         {chevron == faChevronUp && (
-          <div>
+          <div >
             {getBreakdowns && getBreakdowns().map((item) => 
-              <div key={item.description.replace(" ", "_")} className="flex justify-between">
+              <div key={item.description.replace(" ", "_")} className="flex justify-between pb-2">
                 <span>{item.description}</span>
                 <span>{currencySymbol} {item.amount.toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:2})}</span>
               </div>
@@ -230,11 +237,11 @@ export default function Landing({...props}:PropsWithRef<Props>) {
           </div>
         )}
       </div>
-      <div className="mx-3">
+      <div className="sticky bottom-0 mx-3">
         <Button
           block
           type="primary"
-          className="font-bold rounded-full uppercase"
+          className="font-bold rounded-full uppercase h-[48px]"
           onClick={() => handleSellNow()}
         >
           Sell Now

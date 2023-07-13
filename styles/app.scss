@@ -20,6 +20,10 @@
 @import 'input';
 @import 'button';
 
+html { 
+  font-size: 22px; 
+  font-weight: 400;
+}
 body{
   font-family: 'Outfit';
   min-height: 100vh;

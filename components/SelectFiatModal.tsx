@@ -87,7 +87,7 @@ export default function SelectFiatModal({children, readonly = false, ...props} :
       <Button onClick={e => showModalHandler(e)} className="rounded-xl min-w-full bg-gray-50 flex justify-between items-center"  style={{ background: "white"}}>
         <div>
           { selectedFiat &&
-            <div className='flex gap-2 items-center'>
+            <div className='flex gap-1 items-center'>
             <div>
               <img src={selectedFiat.logo} className="w-4 h-4 rounded-full" />
             </div>

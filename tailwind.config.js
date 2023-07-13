@@ -10,12 +10,12 @@ module.exports = {
     extend: {
       colors: {
         gray: {
-          100: '#FBFBFB',
+          100: '#F6F7F9',
           200: '#EAEAEA',
           300: '#DFDFDF',
           400: '#999999',
           500: '#7F7F7F',
-          600: '#666666',
+          600: '#6B6F80',
           700: '#4C4C4C',
           800: '#333333',
           900: '#191919',
@@ -63,9 +63,11 @@ module.exports = {
       },
       fontFamily: {
         inter: ['var(--font-inter)', 'sans-serif'],
+        outfit: ['Outfit'],
+        montreal: ['Neue Montreal'],
       },
       fontSize: {
-        xs: '0.75rem',
+        xs: '0.55rem',
         sm: '0.875rem',
         base: '1rem',
         lg: '1.125rem',
