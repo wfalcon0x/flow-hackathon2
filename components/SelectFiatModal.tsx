@@ -13,8 +13,6 @@ export interface OnFiatSelected{(
   crypto: CurrencyListItem) : void
 }
 
-
-
 type data = {
   items: CurrencyListItem[]
   onFiatSelected?: OnFiatSelected,
@@ -31,7 +29,6 @@ export default function SelectFiatModal({children, readonly = false, ...props} :
   const modal = useRef<HTMLDivElement>();
   const selectModal = useRef<HTMLDivElement>();
   
-
   useEffect(() => {
     if(props.onFiatSelected){
       props.onFiatSelected(null, selectedFiat);
@@ -98,7 +95,7 @@ export default function SelectFiatModal({children, readonly = false, ...props} :
         <FontAwesomeIcon size="xs" icon={faChevronDown}/>
       </Button>
       {showModal &&
-        <div key="modal" className={`absolute overflow-auto bg-white top-0 left-0 w-full h-full z-50 p-3 mb-7`}
+        <div key="modal" className={`absolute overflow-auto scrollbar-hide bg-white top-0 left-0 w-full h-full z-50 p-3 mb-7 rounded-2xl`}
           ref={modal}
         >
           <div className='mb-3'>
@@ -106,16 +103,52 @@ export default function SelectFiatModal({children, readonly = false, ...props} :
           </div>
           <Button type="ghost" className='absolute top-1 right-3' onClick={handleCancel}><FontAwesomeIcon size='2x' icon={faXmark}/></Button>
           <Input
-            className='mb-1'
+            className='mb-1 h-[48px] rounded-full'
+            style={{fontSize: "14px"}}
             onChange={(e)=> handleSearch(e, e.target.value)}
-            suffix={
-              <FontAwesomeIcon icon={faMagnifyingGlass}></FontAwesomeIcon>
+            prefix={
+              <FontAwesomeIcon icon={faMagnifyingGlass} color='gray'></FontAwesomeIcon>
             }
           />
+          <div className='flex justify-start gap-3 py-1'>
+            <div 
+              onClick={(e) => handleSelect(e, {
+                id: "gbp", 
+                logo: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAgCAMAAABjCgsuAAAAyVBMVEUAIH8BIH8CIYAHJoIOLIYPLYYZNYsaNowfO44nQpI3UJo4UJtLYaRhdK9idbBmebJnerJoerN4iLt5ibuQncenstK7w9y8xN29xd3P1ebRDSTe4u7fMh3fNiHgOyfgPCjhQi/hRDHjTjzlW0rlW0vnalvna1vpdWfpdmjpe27qfG/qjYTqj4bqoJnq7PTropvrs7DrtLHrurfrurjr7fTsxcTsxcXu1NXx4ePy8/j06+309fn17e/49PX49Pb7+vv7+/z+/v7///8ZBiYZAAABQklEQVQ4y82U2U4CURBEW3ABRR2VdShkQFTcFUQYQIH6/4/ywbm5KwYeTKzHSarOTU9XC4D+nGkkhsg4jmNSfzmoc/XSAi5fpQ8gGZLVwi+G0jOnNwCuJhQOEg/iGPJl8qMD4GHBhqSc37oQ21BscPEIoDMiy3kp1KghpwHD8YyTHoDrKd9LIiJy5kEMw26FfGsDracV6/vZCzyINhw2+XUPoDvm8iKnx+JAlCF3vuS4C+Duk80jc/BSqBqQSBlqavhkZU8cRQoyIJXhZ/i9CWcn4suEZIaRGn5RQtqJUs77ABJl0MO39iak7EkBbW+It9R/NPz9lJztsH5cEiq8tRpDezX8LobizeULFd6P1+sdpesgZrxRIKcma+LtTocgTrxzNTxIiGrfJSfQi/cvn5W5yam0IOLFB6+3hshm514X/hucN8Af5X8PRgAAAABJRU5ErkJggg=="
+              })}
+              className='flex items-center gap-2 text-xs rounded-full bg-gray-200 px-2 py-1 hover:cursor-pointer'>
+              <img 
+                className="w-3 h-3 rounded-full"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAgCAMAAABjCgsuAAAAyVBMVEUAIH8BIH8CIYAHJoIOLIYPLYYZNYsaNowfO44nQpI3UJo4UJtLYaRhdK9idbBmebJnerJoerN4iLt5ibuQncenstK7w9y8xN29xd3P1ebRDSTe4u7fMh3fNiHgOyfgPCjhQi/hRDHjTjzlW0rlW0vnalvna1vpdWfpdmjpe27qfG/qjYTqj4bqoJnq7PTropvrs7DrtLHrurfrurjr7fTsxcTsxcXu1NXx4ePy8/j06+309fn17e/49PX49Pb7+vv7+/z+/v7///8ZBiYZAAABQklEQVQ4y82U2U4CURBEW3ABRR2VdShkQFTcFUQYQIH6/4/ywbm5KwYeTKzHSarOTU9XC4D+nGkkhsg4jmNSfzmoc/XSAi5fpQ8gGZLVwi+G0jOnNwCuJhQOEg/iGPJl8qMD4GHBhqSc37oQ21BscPEIoDMiy3kp1KghpwHD8YyTHoDrKd9LIiJy5kEMw26FfGsDracV6/vZCzyINhw2+XUPoDvm8iKnx+JAlCF3vuS4C+Duk80jc/BSqBqQSBlqavhkZU8cRQoyIJXhZ/i9CWcn4suEZIaRGn5RQtqJUs77ABJl0MO39iak7EkBbW+It9R/NPz9lJztsH5cEiq8tRpDezX8LobizeULFd6P1+sdpesgZrxRIKcma+LtTocgTrxzNTxIiGrfJSfQi/cvn5W5yam0IOLFB6+3hshm514X/hucN8Af5X8PRgAAAABJRU5ErkJggg=="/>
+              <span>GBP</span>
+            </div>
+            <div 
+              onClick={(e) => handleSelect(e, {
+                id: "eur", 
+                logo: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAgAgMAAAApuhOPAAAACVBMVEUAU6eApFP/9ABWIW2TAAAAQ0lEQVQY02NgoD5gdEDisE1AsEXYJojAOZmMDpkIDhjBlIERMbbAbQLZArcJhYOiDA9AsRTFOSgORfECiueIsoVkAACg9AqhFj835AAAAABJRU5ErkJggg=="
+              })}
+              className='flex items-center gap-1 text-xs rounded-full bg-gray-200 px-2 py-1 hover:cursor-pointer'>
+              <img 
+                className="w-3 h-3 rounded-full"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAgAgMAAAApuhOPAAAACVBMVEUAU6eApFP/9ABWIW2TAAAAQ0lEQVQY02NgoD5gdEDisE1AsEXYJojAOZmMDpkIDhjBlIERMbbAbQLZArcJhYOiDA9AsRTFOSgORfECiueIsoVkAACg9AqhFj835AAAAABJRU5ErkJggg=="/>
+              <span>EUR</span>
+            </div>
+            <div 
+              onClick={(e) => handleSelect(e, {
+                id: "usd", 
+                logo: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAgBAMAAACm+uYvAAAAD1BMVEUAJWq0vtO1v9PBASv////7AfyZAAAAOUlEQVQoz2NgQALGSIABt4QSHDK4IAEGBkU4RJMg3Q4kS9CMQlhCqR3DxB8uOABuCWMcALfEiLUDADkOhlU5rxL6AAAAAElFTkSuQmCC"
+              })}
+              className='flex items-center gap-1 text-xs rounded-full bg-gray-200 px-2 py-1 hover:cursor-pointer'>
+              <img
+                className="w-3 h-3 rounded-full"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAgBAMAAACm+uYvAAAAD1BMVEUAJWq0vtO1v9PBASv////7AfyZAAAAOUlEQVQoz2NgQALGSIABt4QSHDK4IAEGBkU4RJMg3Q4kS9CMQlhCqR3DxB8uOABuCWMcALfEiLUDADkOhlU5rxL6AAAAAElFTkSuQmCC"/>
+              <span>USD</span>
+            </div>
+          </div>
           <ul>
           {displayingList && displayingList.map((item) => 
             <li onClick={(e) => handleSelect(e, item)} key={item.id} className='w-full bg-gray-200 hover:bg-gray-400 px-3 py-2 my-2 rounded-xl text-sm text-default'>
-              <div className='flex items-center gap-2'>
+              <div className='flex items-center gap-1'>
                 <div>
                   <img src={item.logo} className="w-6 h-6 rounded-full" />
                 </div>

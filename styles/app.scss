@@ -46,3 +46,7 @@ body{
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
