@@ -20,7 +20,7 @@ export default async function handler(req, res) {
       conversionRate,
       cryptoAmount,
       cryptoCurrency: fromCrypto,
-      fiatAmount: fiatAmount + '',
+      fiatAmount: total + '',
       fiatCurrency: toFiat,
       fees: {
         breakdowns: [
@@ -36,7 +36,7 @@ export default async function handler(req, res) {
           }
         ],
         total: {
-          description: 'Total Fees',
+          description: 'Total after Fees',
           amount: total + '',
           currency: toFiat
         }
