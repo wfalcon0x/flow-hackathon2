@@ -11,13 +11,13 @@ export default async function getCryptoConversion(
     const result = await fcl.query({
       cadence: `
 import SwapRouter from 0xSwapRouter
-pub fun main(amountOut: UFix64, fromId: String, toId: String): UFix64 {
-  let tokenKeyPath = [toId, fromId]
-  let amountsIn = SwapRouter.getAmountsIn(
-    amountOut: amountOut,
+pub fun main(amountIn: UFix64, fromId: String, toId: String): UFix64 {
+  let tokenKeyPath = [fromId, toId]
+  let amountsOut = SwapRouter.getAmountsOut(
+    amountIn: amountIn,
     tokenKeyPath: tokenKeyPath
   )
-  return amountsIn[0]
+  return amountsOut[1]
 }
       `,
       args: (arg, t) => [
