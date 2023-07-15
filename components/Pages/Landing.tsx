@@ -1,21 +1,17 @@
 import { ChangeEvent, PropsWithRef, useEffect, useRef, useState } from "react";
 import * as fcl from "@onflow/fcl";
-import MainLayout from "../../layouts/MainLayout";
-import { Input, Space, Select, Button, InputNumber, InputRef } from "antd";
+import { Input, Button, InputRef } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faClock,
-  faCircle,
-  faSquareFull,
 } from "@fortawesome/free-regular-svg-icons";
 import SelectCryptoModal from "../../components/SelectCryptoModal";
-import useUserTokenList, { UserToken } from "../../hooks/useUserTokenList";
+import { UserToken } from "../../hooks/useUserTokenList";
 import useCurrencyList, { CurrencyListItem } from "../../hooks/useCurrencyList";
 import SelectFiatModal from "../../components/SelectFiatModal";
 import getSymbolFromCurrency from 'currency-symbol-map'
-import useCurrentUser from "../../hooks/useCurrentUser";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import { AppBase, IOnCryptoInfoSelected, IOnSetNavigatePage, NavigatePage, QuoteData } from "../../helpers/interfaces";
+import { AppBase, IOnSetNavigatePage, NavigatePage, QuoteData } from "../../helpers/interfaces";
 import OpenOTPModal from "../OpenOTPModal";
 
 type Props = {
@@ -185,31 +181,21 @@ export default function Landing({...props}:PropsWithRef<Props>) {
       { (user.addr && quote) && 
       <>
         <div className="w-100 grow m-3">
-          <label className="text-xs text-gray-600">Connected Wallet to {quote.cryptoCurrency}</label>
-          <div className="rounded-full w-full h-[48px] mx-auto bg-gradient-to-r p-[3px] from-[#eb98fd] to-[#6ab7ff]">
-            <div className="flex font-[500] justify-normal items-center h-full bg-white rounded-full px-4 text-[14px] font-montreal">
-              <div>
-                {user ? user.addr : ""}
-              </div>
+          <label className="text-xs text-gray-600">Connected Wallet to FLOW</label>
+          <div className="flex font-[500] justify-normal items-center h-full bg-white rounded-full text-[14px] font-montreal">
+            <div>
+              {user ? user.addr : ""}
             </div>
           </div>
         </div>
         { props.appData?.recipientName &&
           <div className="w-100 grow m-3">
-          <label className="text-xs text-gray-600">Sending to {props.appData?.recipientName}</label>
-          <div className="rounded-full w-full h-[48px] mx-auto bg-gradient-to-r p-[3px] from-[#eb98fd] to-[#6ab7ff]">
-            <div className="flex font-[500] justify-normal items-center h-full bg-white rounded-full px-4 text-[14px] font-montreal">
-              <div>
-                {user ? user.addr : ""}
-              </div>
-            </div>
-          </div>
+          <label className="text-[16px] font-montreal text-gray-500">Sending to {props.appData?.recipientName}</label>
         </div>
         }
       </>
       }
       <div className={"bg-gray-100 px-2 pb-2 align mx-3 mb-3 align-middle rounded-xl " + (!user.addr ? "mt-8" : "")}>
-      {/* <div className="bg-gray-100 px-2 pb-2 align mx-3 mt-8 mb-3 align-middle rounded-xl"> */}
         <div className="grid grid-cols-12 gap-1">
           <div className="col-start-1 col-span-7 grid grid-cols-12">
             <div className="w-100 m-auto grow col-start-1 col-span-7">

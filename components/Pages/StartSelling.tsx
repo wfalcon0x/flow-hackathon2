@@ -1,5 +1,5 @@
 import { PropsWithRef, useEffect, useState } from "react"
-import { AppBase, IOnSetNavigatePage, NavigatePage } from "../../helpers/interfaces"
+import { IOnSetNavigatePage, NavigatePage } from "../../helpers/interfaces"
 import * as fcl from "@onflow/fcl";
 import SelectCryptoModal from "../SelectCryptoModal";
 import SelectFiatModal from "../SelectFiatModal";
@@ -7,7 +7,7 @@ import OpenOTPModal from "../OpenOTPModal";
 import { Button, Input } from "antd";
 import { CurrencyListItem } from "../../hooks/useCurrencyList";
 import { UserToken } from "../../hooks/useUserTokenList";
-import { faArrowRight, faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useQuote from "../../hooks/useQuote";
 import getSymbolFromCurrency from "currency-symbol-map";
@@ -64,18 +64,12 @@ export default function StartSelling({...props}:PropsWithRef<Props>) {
       {quote &&
         <>
           <div className="w-100 grow mx-3 mb-3">
-            <label className="text-xs text-gray-600">Connected Wallet to {props.crypto.symbol}</label>
-            <div className="rounded-full w-full h-10 mx-auto bg-gradient-to-r p-[3px] from-[#eb98fd] to-[#6ab7ff]">
-              <div className="flex justify-normal items-center h-full bg-white rounded-full px-4 text-primary text-sm font-bold">
-                <div>
-                  {user ? user.addr : ""}
-                </div>
+            <label className="text-xs text-gray-600">Connected Wallet to FLOW</label>
+            <div className="flex justify-normal items-center h-full bg-white rounded-full px-4 text-primary text-sm font-bold">
+              <div>
+                {user ? user.addr : ""}
               </div>
             </div>
-            {/* <Input
-              value={user ? user.addr : ""}
-              className="bg-transparent rounded-full gradient-border"
-            /> */}
           </div>
           <div className="bg-gray-100 p-3 align mx-3 my-6 align-middle rounded-xl">
             <div className="grid grid-cols-6 gap-4">
@@ -85,7 +79,6 @@ export default function StartSelling({...props}:PropsWithRef<Props>) {
                   <Input
                     id="cryptoAmount"
                     value={props.cryptoAmount}
-                    // onChange={(e) => handleValueChanged(e, e.target.value)}
                     className="border-none bg-transparent hover:border-none focus:border-none"
                   />
                 </div>
